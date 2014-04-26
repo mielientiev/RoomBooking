@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL - RoomBooking@localhost" uuid="5c8532bc-e70d-46b6-bbd3-ba686266884b">
+    <database-info product="MySQL" version="5.5.37-0ubuntu0.13.10.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.26 ( Revision: ${bzr.revision-id} )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="RoomBooking"/>
+    <table name="Booking" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="room_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="timetable_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_BookedAudience_Timetable" columns="timetable_id" ref-table="Timetable" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Booking_Audience" columns="room_id" ref-table="Room" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Booking_User_Id" columns="user_id" ref-table="User" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_BookedAudience_Audience_idx" unique="false" columns="room_id"/>
+      <index name="fk_BookedAudience_Timetable_idx" unique="false" columns="timetable_id"/>
+      <index name="fk_BookedAudience_User_Id_idx" unique="false" columns="user_id"/>
+    </table>
+    <table name="Position" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_Right_Post" table="Right" schema="" catalog="RoomBooking" columns="position_id"/>
+      <exported-key name="fk_User_post" table="User" schema="" catalog="RoomBooking" columns="position"/>
+      <index name="title_UNIQUE" unique="true" columns="title"/>
+    </table>
+    <table name="Right" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="position_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="room_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="can_book_room" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_Right_Post" columns="position_id" ref-table="Position" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_Right_Room" columns="room_id" ref-table="RoomType" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_Right_Audience_idx" unique="false" columns="room_id"/>
+      <index name="fk_Right_Position_idx" unique="false" columns="position_id"/>
+    </table>
+    <table name="Room" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="room_name" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="floor" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="places" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="computers" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="board" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MQ=="/>
+      <column name="projector" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_Room_type" columns="type" ref-table="RoomType" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_Booking_Audience" table="Booking" schema="" catalog="RoomBooking" columns="room_id"/>
+      <index name="audience_name_UNIQUE" unique="true" columns="room_name"/>
+      <index name="fk_Audience_type_idx" unique="false" columns="type"/>
+    </table>
+    <table name="RoomType" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="room_type" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_Right_Room" table="Right" schema="" catalog="RoomBooking" columns="room_id"/>
+      <exported-key name="fk_Room_type" table="Room" schema="" catalog="RoomBooking" columns="type"/>
+      <index name="audience_type_UNIQUE" unique="true" columns="room_type"/>
+    </table>
+    <table name="Timetable" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="start" sqlType="TIME" precision="8" scale="0" nullable="true" jdbcType="92"/>
+      <column name="end" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_BookedAudience_Timetable" table="Booking" schema="" catalog="RoomBooking" columns="timetable_id"/>
+    </table>
+    <table name="User" schema="" catalog="RoomBooking" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="login" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="first_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="second_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="position" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_User_post" columns="position" ref-table="Position" ref-schema="" ref-catalog="RoomBooking" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_Booking_User_Id" table="Booking" schema="" catalog="RoomBooking" columns="user_id"/>
+      <index name="fk_User_post_idx" unique="false" columns="position"/>
+    </table>
+  </data-source>
+</component>
