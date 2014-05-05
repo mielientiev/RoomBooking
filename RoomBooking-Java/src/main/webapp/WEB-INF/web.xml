@@ -4,12 +4,22 @@
          xmlns="http://java.sun.com/xml/ns/j2ee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-    <display-name>Restful Web Application</display-name>
+    <display-name>Classroom Booking Service</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:/applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>jersey-serlvet</servlet-name>
         <servlet-class>
-            com.sun.jersey.spi.container.servlet.ServletContainer
+            com.sun.jersey.spi.spring.container.servlet.SpringServlet
         </servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
@@ -21,11 +31,11 @@
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-            <param-value>com.roombooking.util.AuthenticationFilter</param-value>
+            <param-value>com.roombooking.filter.AuthenticationFilter</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.spi.container.ResourceFilters</param-name>
-            <param-value>com.roombooking.util.RolesAllowedResourceFilterFactory</param-value>
+            <param-value>com.sun.jersey.api.container.filter.RolesAllowedResourceFilterFactory</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -34,5 +44,6 @@
         <servlet-name>jersey-serlvet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
 
 </web-app>
