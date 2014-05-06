@@ -141,4 +141,5 @@ public class Room {
     public void setRoomType(RoomType roomTypeByType) {
         this.roomType = roomTypeByType;
     }
+
 }

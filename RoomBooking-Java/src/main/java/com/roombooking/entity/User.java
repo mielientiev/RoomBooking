@@ -1,17 +1,18 @@
 package com.roombooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONE)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "@id2")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonInclude(Include.NON_NULL)
 public class User {
 
     private int id;
@@ -20,7 +21,6 @@ public class User {
     private String email;
     private String firstName;
     private String secondName;
-    @JsonIgnore
     private List<Booking> bookings;
     private Role role;
     private Position position;

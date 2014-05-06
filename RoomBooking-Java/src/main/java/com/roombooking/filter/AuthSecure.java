@@ -35,4 +35,5 @@ public class AuthSecure implements SecurityContext {
     public String getAuthenticationScheme() {
         return BASIC_AUTH;
     }
+
 }

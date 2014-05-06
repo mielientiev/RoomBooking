@@ -1,7 +1,5 @@
 package com.roombooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,7 +9,7 @@ import java.sql.Date;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "@id2")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "id")
 public class Booking {
 
     private int id;
@@ -93,4 +91,5 @@ public class Booking {
     public void setRoom(Room roomByRoomId) {
         this.room = roomByRoomId;
     }
+
 }

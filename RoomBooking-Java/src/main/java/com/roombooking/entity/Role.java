@@ -1,24 +1,22 @@
 package com.roombooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.List;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "@id2")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonInclude(Include.NON_NULL)
 public class Role {
 
     private int id;
     private String title;
-
-    @JsonView(Role.class)
     private List<User> users;
 
     @Id
@@ -69,4 +67,5 @@ public class Role {
     public void setUsers(List<User> usersById) {
         this.users = usersById;
     }
+
 }

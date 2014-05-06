@@ -74,4 +74,5 @@ public class RoomType {
     public void setRooms(Collection<Room> roomsById) {
         this.rooms = roomsById;
     }
+
 }

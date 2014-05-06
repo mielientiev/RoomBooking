@@ -1,7 +1,6 @@
 package com.roombooking.restapi;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.roombooking.dao.UserDao;
+import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,7 @@ public class RoleRestResource {
     @RolesAllowed("User")
     @Path("/role/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(Role.class)
-    public Role getUserById(@PathParam("id") int id) {
+    public Role getRolById(@PathParam("id") int id) {
         return null;
     }
 

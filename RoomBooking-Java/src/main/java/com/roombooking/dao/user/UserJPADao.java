@@ -1,5 +1,6 @@
-package com.roombooking.dao;
+package com.roombooking.dao.user;
 
+import com.roombooking.dao.AbstractDao;
 import com.roombooking.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,10 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserJPADao extends AbstractDao<User> implements UserDao {
+
+    protected UserJPADao() {
+        super(User.class);
+    }
 
     @Transactional(readOnly = true)
     public User findByLoginPassword(String login, String password) {
@@ -30,6 +35,33 @@ public class UserJPADao extends AbstractDao<User> implements UserDao {
         }
 
         return users.iterator().next();
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> getAllUsers() {
+        List<User> users = findAll();
+        if (!users.isEmpty()) {
+            for (User user : users) {
+                user.setBookings(null);
+                user.getRole().setUsers(null);
+                user.getPosition().setRights(null);
+                user.getPosition().setUsers(null);
+                user.setPassword(null);
+            }
+        }
+        return users;
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserById(int id) {
+        User user = findById(id);
+        if (user != null) {
+            user.setBookings(null);
+            user.getRole().setUsers(null);
+            user.getPosition().setRights(null);
+            user.getPosition().setUsers(null);
+        }
+        return user;
     }
 
 }

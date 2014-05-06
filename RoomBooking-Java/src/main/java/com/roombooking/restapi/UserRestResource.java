@@ -1,25 +1,24 @@
 package com.roombooking.restapi;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.roombooking.dao.UserDao;
+import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.User;
+import com.roombooking.util.LoggerUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Path("/user-service")
 public class UserRestResource {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.getClassName());
     @Autowired
     private UserDao dao;
 
@@ -27,24 +26,31 @@ public class UserRestResource {
     @RolesAllowed({"ADMIN", "User"})
     @Path("/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(User.class)
-    public Response getUserById(@PathParam("id") int id) {
-        User user = dao.findById(id);
-        if (user != null) {
-            System.out.println(user.getRole().getTitle());
-            System.out.println(user.getRole().getId());
-            return Response.ok().entity(user).build();
+    public User getUserById(@PathParam("id") int id) {
+        logger.info("Get user by id = " + id);
+        User user = dao.getUserById(id);
+        if (user == null) {
+            logger.info("User #" + id + " Not Found");
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        logger.info("User #" + id + " Found");
+        return user;
     }
 
     @GET
-    @RolesAllowed({"ADMIN", "User"})
+    @RolesAllowed("ADMIN")
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
-    @JsonView(User.class)
     public List<User> getAllUsers() {
-        return new ArrayList<>(dao.findAll());
+        logger.info("Get All Users ");
+        List<User> users = dao.getAllUsers();
+        if (users.isEmpty()) {
+            logger.info("Users Not Found");
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        logger.info("Users Found");
+        return users;
     }
+
 
 }

@@ -1,6 +1,6 @@
-package com.roombooking.dao.test;
+package com.roombooking.dao.user;
 
-import com.roombooking.dao.UserDao;
+import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.Role;
 import com.roombooking.entity.User;
 
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserStubDao implements UserDao {
+public class UserTestDao implements UserDao {
 
     private List<User> users;
     private List<Role> roles;
 
-    public UserStubDao() {
+    public UserTestDao() {
         users = new ArrayList<>();
         roles = new ArrayList<>();
         Role roleAdimn = new Role();
@@ -52,8 +52,18 @@ public class UserStubDao implements UserDao {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        return findAll();
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return findById(id);
+    }
+
+    @Override
     public List<User> findAll() {
-        return null;
+        return users;
     }
 
     @Override

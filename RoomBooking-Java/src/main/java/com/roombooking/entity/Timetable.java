@@ -77,4 +77,5 @@ public class Timetable {
     public void setBookings(Collection<Booking> bookingsById) {
         this.bookings = bookingsById;
     }
+
 }

@@ -74,4 +74,6 @@ public class Right {
     public void setRoomType(RoomType roomTypeByRoomId) {
         this.roomType = roomTypeByRoomId;
     }
+
 }
+

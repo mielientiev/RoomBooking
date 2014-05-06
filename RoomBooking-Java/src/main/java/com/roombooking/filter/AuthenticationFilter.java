@@ -1,6 +1,6 @@
 package com.roombooking.filter;
 
-import com.roombooking.dao.UserDao;
+import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.User;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
