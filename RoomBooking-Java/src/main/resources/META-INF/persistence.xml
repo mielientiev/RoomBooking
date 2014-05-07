@@ -7,7 +7,7 @@
     <persistence-unit name="roomBE">
         <class>com.roombooking.entity.Booking</class>
         <class>com.roombooking.entity.Position</class>
-        <class>com.roombooking.entity.Right</class>
+        <class>com.roombooking.entity.Rights</class>
         <class>com.roombooking.entity.Room</class>
         <class>com.roombooking.entity.RoomType</class>
         <class>com.roombooking.entity.Timetable</class>
@@ -15,7 +15,7 @@
         <class>com.roombooking.entity.Role</class>
 
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="false"/>

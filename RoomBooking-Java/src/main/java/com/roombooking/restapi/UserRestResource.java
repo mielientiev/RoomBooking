@@ -1,12 +1,13 @@
 package com.roombooking.restapi;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.User;
 import com.roombooking.util.LoggerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -14,8 +15,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Service
+@Component
 @Path("/user-service")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRestResource {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.getClassName());
@@ -23,7 +25,7 @@ public class UserRestResource {
     private UserDao dao;
 
     @GET
-    @RolesAllowed({"ADMIN", "User"})
+    @RolesAllowed({"Admin", "User"})
     @Path("/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public User getUserById(@PathParam("id") int id) {
@@ -38,7 +40,7 @@ public class UserRestResource {
     }
 
     @GET
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("Admin")
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getAllUsers() {

@@ -1,15 +1,18 @@
 package com.roombooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.Collection;
+import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.*;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_NULL)
 public class Room {
 
     private int id;
@@ -19,10 +22,11 @@ public class Room {
     private Integer computers;
     private Boolean board;
     private Boolean projector;
-    private Collection<Booking> bookings;
+    private List<Booking> bookings;
     private RoomType roomType;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -124,11 +128,11 @@ public class Room {
     }
 
     @OneToMany(mappedBy = "room")
-    public Collection<Booking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(Collection<Booking> bookingsById) {
+    public void setBookings(List<Booking> bookingsById) {
         this.bookings = bookingsById;
     }
 

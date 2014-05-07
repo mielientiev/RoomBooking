@@ -5,19 +5,20 @@ import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.Collection;
+import java.util.List;
 
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 public class RoomType {
 
     private int id;
     private String roomType;
-    private Collection<Right> rights;
-    private Collection<Room> rooms;
+    private List<Rights> rights;
+    private List<Room> rooms;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -58,20 +59,20 @@ public class RoomType {
     }
 
     @OneToMany(mappedBy = "roomType")
-    public Collection<Right> getRights() {
+    public List<Rights> getRights() {
         return rights;
     }
 
-    public void setRights(Collection<Right> rightsById) {
+    public void setRights(List<Rights> rightsById) {
         this.rights = rightsById;
     }
 
     @OneToMany(mappedBy = "roomType")
-    public Collection<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(Collection<Room> roomsById) {
+    public void setRooms(List<Room> roomsById) {
         this.rooms = roomsById;
     }
 

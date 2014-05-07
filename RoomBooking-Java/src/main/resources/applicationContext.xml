@@ -11,6 +11,9 @@
     <context:component-scan base-package="com.roombooking"/>
     <!--Beans-->
     <bean id="userDao" class="com.roombooking.dao.user.UserJPADao" scope="prototype"/>
+    <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao" scope="prototype"/>
+
+    <bean id = "roomService" class="com.roombooking.service.RoomService"/>
 
     <!--Beans-->
 

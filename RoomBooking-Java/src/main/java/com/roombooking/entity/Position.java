@@ -5,22 +5,23 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @JsonInclude(Include.NON_NULL)
 public class Position {
 
     private int id;
     private String title;
-    private Collection<Right> rights;
-    private Collection<User> users;
+    private List<Rights> rights;
+    private List<User> users;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -61,20 +62,20 @@ public class Position {
     }
 
     @OneToMany(mappedBy = "position")
-    public Collection<Right> getRights() {
+    public List<Rights> getRights() {
         return rights;
     }
 
-    public void setRights(Collection<Right> rightsById) {
+    public void setRights(List<Rights> rightsById) {
         this.rights = rightsById;
     }
 
     @OneToMany(mappedBy = "position")
-    public Collection<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<User> usersById) {
+    public void setUsers(List<User> usersById) {
         this.users = usersById;
     }
 

@@ -1,13 +1,17 @@
 package com.roombooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.*;
+
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Right {
+@Cache(usage = CacheConcurrencyStrategy.NONE)
+@JsonInclude(Include.NON_NULL)
+public class Rights {
 
     private int id;
     private Boolean canBookRoom;
@@ -15,6 +19,7 @@ public class Right {
     private RoomType roomType;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -40,7 +45,7 @@ public class Right {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Right that = (Right) o;
+        Rights that = (Rights) o;
 
         if (id != that.id) return false;
         if (canBookRoom != null ? !canBookRoom.equals(that.canBookRoom) : that.canBookRoom != null) return false;

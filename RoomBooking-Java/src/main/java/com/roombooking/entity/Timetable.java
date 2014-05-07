@@ -5,19 +5,20 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.Collection;
+import java.util.List;
 
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 public class Timetable {
 
     private int id;
     private Time start;
     private Time end;
-    private Collection<Booking> bookings;
+    private List<Booking> bookings;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -70,11 +71,11 @@ public class Timetable {
     }
 
     @OneToMany(mappedBy = "timetable")
-    public Collection<Booking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(Collection<Booking> bookingsById) {
+    public void setBookings(List<Booking> bookingsById) {
         this.bookings = bookingsById;
     }
 

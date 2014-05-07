@@ -21,7 +21,7 @@ public class UserRestResourceTest extends JerseyTest {
     @Override
     protected AppDescriptor configure() {
         return new WebAppDescriptor.Builder("com.roombooking.restapi")
-                .contextParam("contextConfigLocation", "classpath:testContext.xml")
+                .contextParam("contextConfigLocation", "classpath:applicationContext.xml")
                 .contextListenerClass(ContextLoaderListener.class)
                 .requestListenerClass(RequestContextListener.class)
                 .initParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
@@ -41,7 +41,7 @@ public class UserRestResourceTest extends JerseyTest {
         WebResource webResource = resource().path("/user-service/user/1");
         ClientResponse response = webResource
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic bG9naW46cGFzc3c")
+                .header("Authorization", "Basic bWVsaToxMjM0NQ")
                 .get(ClientResponse.class);
         String jsonStr = response.getEntity(String.class);
         System.out.println(jsonStr);
@@ -62,10 +62,9 @@ public class UserRestResourceTest extends JerseyTest {
         WebResource webResource = resource().path("/user-service/user/1");
         ClientResponse response = webResource
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic bG9naW4yOnBhc3N3Mg")
+                .header("Authorization", "Basic ZGRkOjEyMw==")
                 .get(ClientResponse.class);
         String jsonStr = response.getEntity(String.class);
-        System.out.println(jsonStr);
         assertEquals(200, response.getStatus());
     }
 
@@ -74,7 +73,7 @@ public class UserRestResourceTest extends JerseyTest {
         WebResource webResource = resource().path("/user-service/user/100");
         ClientResponse response = webResource
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic bG9naW4yOnBhc3N3Mg")
+                .header("Authorization", "Basic YWRzOjEyMw")
                 .get(ClientResponse.class);
         assertEquals(404, response.getStatus());
     }

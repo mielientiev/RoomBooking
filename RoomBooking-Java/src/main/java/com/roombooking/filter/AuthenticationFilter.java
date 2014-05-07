@@ -9,21 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Priority;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
 import java.nio.charset.Charset;
 import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status;
 
-@Provider
+
 @Service
+@Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Autowired
     private UserDao dao;
+
+    @Context
+    private HttpServletRequest servletRequest;
 
     @Override
     public ContainerRequest filter(ContainerRequest requestContext) {
@@ -35,6 +41,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         boolean secure = requestContext.getSecurityContext().isSecure();
         requestContext.setSecurityContext(new AuthSecure(new AuthPrincipal(user.get()), secure));
+        servletRequest.setAttribute("CurrentUser",user.get());
         return requestContext;
     }
 
@@ -47,7 +54,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         if (decodedAuth.isEmpty())
             return Optional.empty();
 
-        int pos = decodedAuth.indexOf(":");
+        int pos = decodedAuth.indexOf(":");    //todo
         String login = decodedAuth.substring(0, pos);
         String password = decodedAuth.substring(pos + 1);
         return Optional.ofNullable(dao.findByLoginPassword(login, password));
