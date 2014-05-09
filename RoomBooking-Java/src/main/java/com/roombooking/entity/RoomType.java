@@ -1,20 +1,21 @@
 package com.roombooking.entity;
 
-import org.hibernate.annotations.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.List;
-
+import java.util.Set;
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RoomType {
 
     private int id;
     private String roomType;
-    private List<Rights> rights;
+    private Set<Rights> rights;
     private List<Room> rooms;
 
     @Id
@@ -58,16 +59,17 @@ public class RoomType {
         return result;
     }
 
-    @OneToMany(mappedBy = "roomType")
-    public List<Rights> getRights() {
+
+    @OneToMany(mappedBy = "roomType",cascade=CascadeType.ALL)
+    public Set<Rights> getRights() {
         return rights;
     }
 
-    public void setRights(List<Rights> rightsById) {
+    public void setRights(Set<Rights> rightsById) {
         this.rights = rightsById;
     }
 
-    @OneToMany(mappedBy = "roomType")
+    @OneToMany(mappedBy = "roomType",cascade=CascadeType.ALL)
     public List<Room> getRooms() {
         return rooms;
     }

@@ -1,5 +1,6 @@
 package com.roombooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,9 +8,11 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonInclude(Include.NON_EMPTY)
 public class Timetable {
 
     private int id;

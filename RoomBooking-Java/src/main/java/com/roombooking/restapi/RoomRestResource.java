@@ -28,7 +28,7 @@ public class RoomRestResource {
     private RoomService roomService;
 
     @GET
-    @RolesAllowed({"User","Admin"})
+    @RolesAllowed({"User", "Admin"})
     @Path("/room/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Room getRoomById(@PathParam("id") int id, @Context HttpServletRequest servletRequest) {

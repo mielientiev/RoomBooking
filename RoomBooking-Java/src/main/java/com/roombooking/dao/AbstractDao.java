@@ -1,6 +1,5 @@
 package com.roombooking.dao;
 
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -55,7 +54,7 @@ public class AbstractDao<T> implements Dao<T> {
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true)
     public T findById(int id) {
         return entityManager.find(this.entityClass, id);
     }

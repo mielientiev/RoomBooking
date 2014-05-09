@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface RightsDao extends Dao<Rights> {
 
-    public List<Rights> getUserRights(int userId);
+    List<Rights> getUserRights(int userId);
+
 }

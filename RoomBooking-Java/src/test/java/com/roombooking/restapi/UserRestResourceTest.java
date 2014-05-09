@@ -62,7 +62,7 @@ public class UserRestResourceTest extends JerseyTest {
         WebResource webResource = resource().path("/user-service/user/1");
         ClientResponse response = webResource
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic ZGRkOjEyMw==")
+                .header("Authorization", "Basic dmFoYToxMjM0NTY")
                 .get(ClientResponse.class);
         String jsonStr = response.getEntity(String.class);
         assertEquals(200, response.getStatus());
@@ -73,7 +73,7 @@ public class UserRestResourceTest extends JerseyTest {
         WebResource webResource = resource().path("/user-service/user/100");
         ClientResponse response = webResource
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Basic YWRzOjEyMw")
+                .header("Authorization", "Basic dmFoYToxMjM0NTY")
                 .get(ClientResponse.class);
         assertEquals(404, response.getStatus());
     }

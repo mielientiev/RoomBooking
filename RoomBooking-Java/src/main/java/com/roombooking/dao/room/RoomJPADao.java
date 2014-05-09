@@ -2,8 +2,10 @@ package com.roombooking.dao.room;
 
 import com.roombooking.dao.AbstractDao;
 import com.roombooking.entity.Room;
+import com.roombooking.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class RoomJPADao extends AbstractDao<Room> implements RoomDao {
@@ -14,33 +16,23 @@ public class RoomJPADao extends AbstractDao<Room> implements RoomDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Room getRoomById(int id) {
-        Room room = findById(id);
-        if (room != null) {
-            cleanUnnecessaryFields(room);
+    public Room getRoomByIdWithUserRights(int id, User user) {
+        TypedQuery<Room> query = getEntityManager().createNamedQuery("Room.findRoomByIdWithUserPositionRights", entityClass);
+        query.setParameter("usid", user.getId());
+        query.setParameter("roomId", id);
+        List<Room> rooms = query.getResultList();
+        if (rooms.isEmpty()) {
+            return null;
         }
-
-        return room;
+        return rooms.iterator().next();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Room> getAllRooms() {
-        List<Room> rooms = findAll();
-        if (!rooms.isEmpty()) {
-            for (Room room : rooms) {
-                cleanUnnecessaryFields(room);
-            }
-        }
-        return rooms;
-    }
-
-
-    private void cleanUnnecessaryFields(Room room) {
-        room.setBookings(null);
-        room.getRoomType().getRights();
-        room.getRoomType().setRooms(null);
-        room.getRoomType().getRights();
+    public List<Room> getAllRoomsWithUserRights(User user) {
+        TypedQuery<Room> query = getEntityManager().createNamedQuery("Room.findAllRoomsWithUserPositionRights", entityClass);
+        query.setParameter("usid", user.getId());
+        return query.getResultList();
     }
 
 }

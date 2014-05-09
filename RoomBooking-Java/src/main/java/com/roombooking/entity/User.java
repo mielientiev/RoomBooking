@@ -10,9 +10,12 @@ import java.util.List;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONE)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonInclude(Include.NON_NULL)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "User.findUserByLoginPassword", query =
+                "SELECT user FROM User user WHERE user.login=:login AND user.password=:password")
+})
 public class User {
 
     private int id;

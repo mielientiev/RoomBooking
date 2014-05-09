@@ -1,18 +1,29 @@
 package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.List;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.*;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Room.findAllRoomsWithUserPositionRights", query = "SELECT room \n" +
+                "FROM  Room as room, User u \n" +
+                "INNER JOIN fetch room.roomType as rtype \n" +
+                "INNER JOIN fetch rtype.rights as rights \n" +
+                "WHERE rights.position.id = u.position.id AND u.id =:usid"),
+        @NamedQuery(name = "Room.findRoomByIdWithUserPositionRights", query = "SELECT room \n" +
+                "FROM  Room as room, User u \n" +
+                "INNER JOIN fetch room.roomType as rtype \n" +
+                "INNER JOIN fetch rtype.rights as rights \n" +
+                "WHERE room.id=:roomId AND rights.position.id = u.position.id AND u.id =:usid")
+})
 public class Room {
 
     private int id;

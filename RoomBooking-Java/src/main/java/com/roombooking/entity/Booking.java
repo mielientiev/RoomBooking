@@ -1,5 +1,6 @@
 package com.roombooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,8 +9,8 @@ import java.sql.Date;
 
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONE)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "id")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Booking {
 
     private int id;

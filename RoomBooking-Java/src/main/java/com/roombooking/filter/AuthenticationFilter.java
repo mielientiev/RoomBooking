@@ -15,10 +15,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
 import java.nio.charset.Charset;
-import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status;
-
 
 @Service
 @Provider
@@ -34,30 +32,30 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @Override
     public ContainerRequest filter(ContainerRequest requestContext) {
         String authorization = requestContext.getRequestHeaders().getFirst("Authorization");
-        Optional<User> user = userAuthorization(authorization);
-        if (!user.isPresent()) {
+        User user = userAuthorization(authorization);
+        if (user == null) {
             throw new WebApplicationException(Status.UNAUTHORIZED);
         }
 
         boolean secure = requestContext.getSecurityContext().isSecure();
-        requestContext.setSecurityContext(new AuthSecure(new AuthPrincipal(user.get()), secure));
-        servletRequest.setAttribute("CurrentUser",user.get());
+        requestContext.setSecurityContext(new AuthSecure(new AuthPrincipal(user), secure));
+        servletRequest.setAttribute("CurrentUser", user);
         return requestContext;
     }
 
-    private Optional<User> userAuthorization(String auth) {
+    private User userAuthorization(String auth) {
         if (auth == null) {
-            return Optional.empty();
+            return null;
         }
 
         String decodedAuth = decode(auth);
         if (decodedAuth.isEmpty())
-            return Optional.empty();
+            return null;
 
-        int pos = decodedAuth.indexOf(":");    //todo
+        int pos = decodedAuth.indexOf(":");  //todo validate [:] char
         String login = decodedAuth.substring(0, pos);
         String password = decodedAuth.substring(pos + 1);
-        return Optional.ofNullable(dao.findByLoginPassword(login, password));
+        return dao.findByLoginPassword(login, password);
     }
 
     private String decode(String auth) {

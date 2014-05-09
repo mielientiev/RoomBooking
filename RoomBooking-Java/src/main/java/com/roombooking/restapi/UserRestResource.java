@@ -3,7 +3,7 @@ package com.roombooking.restapi;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.User;
-import com.roombooking.util.LoggerUtil;
+import com.roombooking.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRestResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.getClassName());
+    private static final Logger logger = LoggerFactory.getLogger(UserRestResource.class);
     @Autowired
-    private UserDao dao;
+    private UserService userService;
 
     @GET
     @RolesAllowed({"Admin", "User"})
@@ -30,7 +30,7 @@ public class UserRestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public User getUserById(@PathParam("id") int id) {
         logger.info("Get user by id = " + id);
-        User user = dao.getUserById(id);
+        User user = userService.getUserById(id);
         if (user == null) {
             logger.info("User #" + id + " Not Found");
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -45,7 +45,7 @@ public class UserRestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getAllUsers() {
         logger.info("Get All Users ");
-        List<User> users = dao.getAllUsers();
+        List<User> users = userService.getAllUsers();
         if (users.isEmpty()) {
             logger.info("Users Not Found");
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -53,6 +53,5 @@ public class UserRestResource {
         logger.info("Users Found");
         return users;
     }
-
 
 }

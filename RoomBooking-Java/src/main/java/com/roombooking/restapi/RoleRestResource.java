@@ -19,7 +19,6 @@ public class RoleRestResource {
     @Autowired
     private UserDao dao;
 
-
     @GET
     @RolesAllowed("User")
     @Path("/role/{id}")

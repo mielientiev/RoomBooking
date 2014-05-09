@@ -45,8 +45,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic bWVsaToxMjM0NQ")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -57,8 +57,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic bWVsaToxMjM0NQ")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -69,8 +69,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic bWVsaToxMjM0NQ")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -81,8 +81,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic dmFoYToxMjM0NTY")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -93,8 +93,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic dmFoYToxMjM0NTY")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -105,8 +105,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic dmFoYToxMjM0NTY")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
 
@@ -120,8 +120,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic ZGltYXNpazoxMjM0")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -132,8 +132,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic ZGltYXNpazoxMjM0")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -144,8 +144,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic ZGltYXNpazoxMjM0")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(false, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(false, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
 
@@ -157,8 +157,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic ZXZnZXNoYToxMjM0")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(false, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(false, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -169,8 +169,8 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic ZXZnZXNoYToxMjM0")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(true, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(true, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 
     @Test
@@ -181,7 +181,7 @@ public class RoomRestResourceTest extends JerseyTest {
                 .header("Authorization", "Basic ZXZnZXNoYToxMjM0")
                 .get(ClientResponse.class);
         Room room = response.getEntity(Room.class);
-        System.out.println(room.getRoomType().getRights().get(0).getCanBookRoom());
-        assertEquals(false, room.getRoomType().getRights().get(0).getCanBookRoom());
+        System.out.println(room.getRoomType().getRights().iterator().next().getCanBookRoom());
+        assertEquals(false, room.getRoomType().getRights().iterator().next().getCanBookRoom());
     }
 }
