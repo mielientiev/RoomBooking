@@ -1,6 +1,8 @@
 package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.roombooking.utils.CustomJsonDateDeserializer;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,9 +13,32 @@ import java.sql.Date;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Booking.findAllBookingByUserId",query =
+                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId"),
+
+        @NamedQuery(name = "Booking.findAllAvailableBookingByUserId", query =
+                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId AND booking.date>=:date"),
+
+        @NamedQuery(name = "Booking.findBookingByRoomIdAndDate", query =
+                "SELECT b FROM Timetable timetable, Booking b, Room r " +
+                "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date " +
+                "AND r.id =:roomId order by timetable.id"),
+
+        @NamedQuery(name = "Booking.findBookingByRoomIdDateAndTimetableId", query =
+                "SELECT b FROM Timetable timetable, Booking b, Room r " +
+                        "WHERE b.timetable.id = timetable.id AND timetable.id=:timeId " +
+                        "AND b.room.id = r.id AND b.date =:date " +
+                        "AND r.id =:roomId order by timetable.id")
+
+
+
+
+})
 public class Booking {
 
     private int id;
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Date date;
     private User user;
     private Timetable timetable;

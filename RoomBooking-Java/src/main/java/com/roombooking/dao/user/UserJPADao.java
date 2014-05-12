@@ -20,10 +20,7 @@ public class UserJPADao extends AbstractDao<User> implements UserDao {
         typedQuery.setParameter("login", login);
         typedQuery.setParameter("password", password);
         List<User> users = typedQuery.getResultList();
-        if (users.isEmpty()) {
-            return null;
-        }
-        return users.iterator().next();
+        return users.isEmpty() ? null: users.get(0);
     }
 
 }
