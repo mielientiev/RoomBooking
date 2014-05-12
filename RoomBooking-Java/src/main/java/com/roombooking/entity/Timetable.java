@@ -13,6 +13,11 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Timetable.findTimetableByRoomIdAndDate", query =
+                "SELECT timetable FROM Timetable timetable, Booking b, Room r " +
+                 "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date AND r.id =:roomId")
+})
 public class Timetable {
 
     private int id;

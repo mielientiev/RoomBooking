@@ -18,11 +18,21 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
                 "INNER JOIN fetch room.roomType as rtype \n" +
                 "INNER JOIN fetch rtype.rights as rights \n" +
                 "WHERE rights.position.id = u.position.id AND u.id =:usid"),
-        @NamedQuery(name = "Room.findRoomByIdWithUserPositionRights", query = "SELECT room \n" +
-                "FROM  Room as room, User u \n" +
+        @NamedQuery(name = "Room.findRoomByIdWithUserPositionRights", query =
+                "SELECT room FROM  Room as room, User u \n" +
                 "INNER JOIN fetch room.roomType as rtype \n" +
                 "INNER JOIN fetch rtype.rights as rights \n" +
-                "WHERE room.id=:roomId AND rights.position.id = u.position.id AND u.id =:usid")
+                "WHERE room.id=:roomId AND rights.position.id = u.position.id AND u.id =:usid"),
+
+//        @NamedQuery(name = "Room.filterRooms", query =
+//                "SELECT r FROM Room r " +
+//                "WHERE r.places>=:places AND r.computers>=:comp AND r.projector>=:proj AND r.board>=:board " +
+//                "AND r.roomType.id =:typeid AND r.roomName LIKE :roomName")
+//
+        @NamedQuery(name = "Room.filterRooms", query =
+                "SELECT r FROM Room r " +
+                        "WHERE r.places>=:places AND r.computers>=:comp AND r.projector>=:proj AND r.board>=:board " +
+                        "AND r.roomType.id =:typeid AND r.roomName LIKE :roomName")
 })
 public class Room {
 

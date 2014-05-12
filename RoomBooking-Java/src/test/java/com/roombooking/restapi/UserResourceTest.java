@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserRestResourceTest extends JerseyTest {
+public class UserResourceTest extends JerseyTest {
 
     @Override
     protected AppDescriptor configure() {
