@@ -1,5 +1,6 @@
 package com.roombooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -60,6 +61,7 @@ public class User {
         this.login = login;
     }
 
+    @JsonIgnore
     @Basic
     @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 32)
     public String getPassword() {

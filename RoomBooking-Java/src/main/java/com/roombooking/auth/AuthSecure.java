@@ -1,4 +1,4 @@
-package com.roombooking.filter;
+package com.roombooking.auth;
 
 import com.roombooking.entity.User;
 

@@ -1,8 +1,10 @@
 package com.roombooking.service;
 
 import com.roombooking.dao.room.RoomDao;
+import com.roombooking.dao.roomtype.RoomTypeDao;
 import com.roombooking.entity.Rights;
 import com.roombooking.entity.Room;
+import com.roombooking.entity.RoomType;
 import com.roombooking.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +14,8 @@ public class RoomService {
 
     @Autowired
     private RoomDao roomDao;
+    @Autowired
+    private RoomTypeDao roomTypeDao;
 
     public Room getRoomByIdWithUserRights(int roomId, User user) {
         Room room = roomDao.getRoomByIdWithUserRights(roomId, user);
@@ -21,9 +25,7 @@ public class RoomService {
         return room;
     }
 
-    private void cleanUnnecessaryFields(Room room) {
-        room.setBookings(null);
-        room.getRoomType().setRooms(null);
+    private void cleanUnnecessaryFields(Room room) {         //todo change this on JsonView
         for (Rights rights : room.getRoomType().getRights()) {
             rights.setPosition(null);
             rights.setRoomType(null);
@@ -38,5 +40,13 @@ public class RoomService {
             }
         }
         return rooms;
+    }
+
+    public List<RoomType> getAllRoomTypes() {
+        return roomTypeDao.findAll();
+    }
+
+    public List<Room> filterRooms(int roomType, int places, int computers, boolean board, boolean projector, String roomName) {
+        return roomDao.getFilteredRooms(roomType, places, computers, board, projector, roomName);
     }
 }

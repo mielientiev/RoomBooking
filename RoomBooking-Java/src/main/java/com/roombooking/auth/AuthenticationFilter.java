@@ -1,4 +1,4 @@
-package com.roombooking.filter;
+package com.roombooking.auth;
 
 import com.roombooking.dao.user.UserDao;
 import com.roombooking.entity.User;
@@ -66,7 +66,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             return "";
         }
         return decodedAuth;
-
     }
 
 }

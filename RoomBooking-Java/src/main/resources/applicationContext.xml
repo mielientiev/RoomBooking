@@ -2,19 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:annotation-config />
+    <context:annotation-config/>
     <context:component-scan base-package="com.roombooking"/>
     <!--Beans-->
     <bean id="userDao" class="com.roombooking.dao.user.UserJPADao" scope="prototype"/>
     <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao" scope="prototype"/>
+    <bean id="timetableDao" class="com.roombooking.dao.timetable.TimetableJPADao" scope="prototype"/>
+    <bean id="bookingleDao" class="com.roombooking.dao.booking.BookingJPADao" scope="prototype"/>
+    <bean id="roomtypeleDao" class="com.roombooking.dao.roomtype.RoomTypeJPADao" scope="prototype"/>
 
-    <bean id = "roomService" class="com.roombooking.service.RoomService"/>
-    <bean id = "userService" class="com.roombooking.service.UserService"/>
+    <bean id="roomService" class="com.roombooking.service.RoomService"/>
+    <bean id="userService" class="com.roombooking.service.UserService"/>
+    <bean id="timetableService" class="com.roombooking.service.TimetableService"/>
+    <bean id="bookingService" class="com.roombooking.service.BookingService"/>
 
     <!--Beans-->
 
@@ -43,8 +48,6 @@
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
             </props>
         </property>
-
-
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -54,5 +57,6 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!--JPA (Hibernate)-->
+
 
 </beans>

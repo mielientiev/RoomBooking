@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import static org.junit.Assert.assertEquals;
 
-public class RoomRestResourceTest extends JerseyTest {
+public class RoomResourceTest extends JerseyTest {
 
     @Override
     protected AppDescriptor configure() {
