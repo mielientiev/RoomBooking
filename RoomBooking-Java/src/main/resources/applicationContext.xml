@@ -9,6 +9,7 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.roombooking"/>
+    <context:property-placeholder location="classpath:database.properties"/>
     <!--Beans-->
     <bean id="userDao" class="com.roombooking.dao.user.UserJPADao" scope="prototype"/>
     <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao" scope="prototype"/>
@@ -25,10 +26,10 @@
 
     <!--JPA (Hibernate)-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="username" value="root"/>
-        <property name="password" value="12345"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/RoomBooking"/>
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="${login}"/>
+        <property name="password" value="${password}"/>
+        <property name="url" value="${mysql-uri}"/>
+        <property name="driverClassName" value="${mysql-driver}"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

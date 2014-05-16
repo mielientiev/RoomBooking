@@ -8,6 +8,7 @@ import com.roombooking.entity.RoomType;
 import com.roombooking.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomService {
@@ -46,7 +47,15 @@ public class RoomService {
         return roomTypeDao.findAll();
     }
 
-    public List<Room> filterRooms(int roomType, int places, int computers, boolean board, boolean projector, String roomName) {
-        return roomDao.getFilteredRooms(roomType, places, computers, board, projector, roomName);
+    public List<Room> filterRooms(User user, int roomType, int places, int computers,
+                                  boolean board, boolean projector, String roomName) {
+        List<Room> rooms = roomDao.getFilteredRooms(roomType, places, computers, board, projector, roomName);
+        List<Room> result = new ArrayList<>();
+        for (Room room : rooms) {
+            room = roomDao.getRoomByIdWithUserRights(room.getId(), user);
+            cleanUnnecessaryFields(room);
+            result.add(room);
+        }
+        return result;
     }
 }

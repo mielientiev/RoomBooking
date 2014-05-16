@@ -79,11 +79,13 @@ public class RoomResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getFilterRooms(@PathParam("roomType") int roomType, @PathParam("places") int places,
                                      @PathParam("board") boolean board, @PathParam("computers") int computers,
-                                     @PathParam("projector") boolean projector, @PathParam("roomName") String roomName) {
+                                     @PathParam("projector") boolean projector, @PathParam("roomName") String roomName,
+                                     @Context HttpServletRequest servletRequest) {
 
         logger.debug("Get filter rooms: name-{}, type-{}, places-{}, computers-{}, board-{}, projector-{}", roomName,
                 roomType, places, computers, board, projector);
-        List<Room> rooms = roomService.filterRooms(roomType, places, computers, board, projector, roomName);
+        User user = (User) servletRequest.getAttribute("CurrentUser");
+        List<Room> rooms = roomService.filterRooms(user, roomType, places, computers, board, projector, roomName);
         if (rooms.isEmpty()) {
             logger.debug("Filtered Rooms Not Found");
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -98,11 +100,13 @@ public class RoomResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getFilterRoomsWithEmptyName(@PathParam("roomType") int roomType, @PathParam("places") int places,
                                                   @PathParam("board") boolean board, @PathParam("computers") int computers,
-                                                  @PathParam("projector") boolean projector) {
+                                                  @PathParam("projector") boolean projector,
+                                                  @Context HttpServletRequest servletRequest) {
 
         logger.debug("Get filter rooms (name-empty): name-{}, type-{}, places-{}, computers-{}, board-{}, projector-{}",
                 roomType, places, computers, board, projector);
-        List<Room> rooms = roomService.filterRooms(roomType, places, computers, board, projector, "");
+        User user = (User) servletRequest.getAttribute("CurrentUser");
+        List<Room> rooms = roomService.filterRooms(user,roomType, places, computers, board, projector, "");
         if (rooms.isEmpty()) {
             logger.debug("Filtered Rooms (name-empty) Not Found");
             throw new WebApplicationException(Response.Status.NOT_FOUND);
