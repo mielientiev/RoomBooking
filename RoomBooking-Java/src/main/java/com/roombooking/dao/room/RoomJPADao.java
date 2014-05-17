@@ -21,7 +21,7 @@ public class RoomJPADao extends AbstractDao<Room> implements RoomDao {
         query.setParameter("usid", user.getId());
         query.setParameter("roomId", id);
         List<Room> rooms = query.getResultList();
-        return rooms.isEmpty() ? null: rooms.get(0);
+        return rooms.isEmpty() ? null : rooms.get(0);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RoomJPADao extends AbstractDao<Room> implements RoomDao {
         query.setParameter("comp", computers);
         query.setParameter("board", board);
         query.setParameter("proj", projector);
-        query.setParameter("roomName", "%"+roomName+"%");
+        query.setParameter("roomName", "%" + roomName + "%");
         return query.getResultList();
     }
 

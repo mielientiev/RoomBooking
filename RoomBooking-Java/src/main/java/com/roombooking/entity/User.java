@@ -20,13 +20,21 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class User {
 
     private int id;
+
     private String login;
+
     private String password;
+
     private String email;
+
     private String firstName;
+
     private String secondName;
+
     private List<Booking> bookings;
+
     private Role role;
+
     private Position position;
 
     public User() {
@@ -103,6 +111,17 @@ public class User {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -119,18 +138,7 @@ public class User {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<Booking> getBookings() {
         return bookings;
     }

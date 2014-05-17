@@ -1,6 +1,8 @@
 package com.roombooking.restapi;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.roombooking.entity.Booking;
+import com.roombooking.entity.Room;
 import com.roombooking.entity.User;
 import com.roombooking.service.BookingService;
 import org.slf4j.Logger;
@@ -28,6 +30,7 @@ public class BookingResource {
     private BookingService bookingService;
 
     @GET
+    @JsonView({Room.class})
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getAllBookingByCurrentUser(@Context HttpServletRequest servletRequest) {
@@ -43,6 +46,7 @@ public class BookingResource {
     }
 
     @GET
+    @JsonView({Room.class})
     @Path("/available")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,6 +63,7 @@ public class BookingResource {
     }
 
     @GET
+    @JsonView({User.class})
     @Path("/room-{id}/{date}")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,6 +79,7 @@ public class BookingResource {
     }
 
     @PUT
+    @JsonView({Room.class})
     @RolesAllowed({"Admin", "User"})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

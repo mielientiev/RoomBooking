@@ -2,7 +2,6 @@ package com.roombooking.service;
 
 import com.roombooking.dao.room.RoomDao;
 import com.roombooking.dao.roomtype.RoomTypeDao;
-import com.roombooking.entity.Rights;
 import com.roombooking.entity.Room;
 import com.roombooking.entity.RoomType;
 import com.roombooking.entity.User;
@@ -19,28 +18,11 @@ public class RoomService {
     private RoomTypeDao roomTypeDao;
 
     public Room getRoomByIdWithUserRights(int roomId, User user) {
-        Room room = roomDao.getRoomByIdWithUserRights(roomId, user);
-        if (room != null) {
-            cleanUnnecessaryFields(room);
-        }
-        return room;
-    }
-
-    private void cleanUnnecessaryFields(Room room) {         //todo change this on JsonView
-        for (Rights rights : room.getRoomType().getRights()) {
-            rights.setPosition(null);
-            rights.setRoomType(null);
-        }
+        return roomDao.getRoomByIdWithUserRights(roomId, user);
     }
 
     public List<Room> getAllRoomsWithUserRights(User user) {
-        List<Room> rooms = roomDao.getAllRoomsWithUserRights(user);
-        if (!rooms.isEmpty()) {
-            for (Room room : rooms) {
-                cleanUnnecessaryFields(room);
-            }
-        }
-        return rooms;
+        return roomDao.getAllRoomsWithUserRights(user);
     }
 
     public List<RoomType> getAllRoomTypes() {
@@ -53,7 +35,6 @@ public class RoomService {
         List<Room> result = new ArrayList<>();
         for (Room room : rooms) {
             room = roomDao.getRoomByIdWithUserRights(room.getId(), user);
-            cleanUnnecessaryFields(room);
             result.add(room);
         }
         return result;

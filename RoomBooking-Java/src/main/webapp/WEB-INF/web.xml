@@ -53,16 +53,18 @@
         <filter-name>CORS</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
     <!--<filter>-->
-        <!--<filter-name>springOpenEntityManagerInViewFilter</filter-name>-->
-        <!--<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>entityManagerFactoryBeanName</param-name>-->
-            <!--<param-value>entityManagerFactory</param-value>-->
-        <!--</init-param>-->
+    <!--<filter-name>springOpenEntityManagerInViewFilter</filter-name>-->
+    <!--<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>-->
+    <!--<init-param>-->
+    <!--<param-name>entityManagerFactoryBeanName</param-name>-->
+    <!--<param-value>entityManagerFactory</param-value>-->
+    <!--</init-param>-->
     <!--</filter>-->
     <!--<filter-mapping>-->
-        <!--<filter-name>springOpenEntityManagerInViewFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
+    <!--<filter-name>springOpenEntityManagerInViewFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
 </web-app>

@@ -16,13 +16,16 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @NamedQueries({
         @NamedQuery(name = "Timetable.findTimetableByRoomIdAndDate", query =
                 "SELECT timetable FROM Timetable timetable, Booking b, Room r " +
-                 "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date AND r.id =:roomId")
+                        "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date AND r.id =:roomId")
 })
 public class Timetable {
 
     private int id;
+
     private Time start;
+
     private Time end;
+
     private List<Booking> bookings;
 
     @Id
@@ -57,6 +60,14 @@ public class Timetable {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (start != null ? start.hashCode() : 0);
+        result = 31 * result + (end != null ? end.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -70,15 +81,7 @@ public class Timetable {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (start != null ? start.hashCode() : 0);
-        result = 31 * result + (end != null ? end.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "timetable")
+    @OneToMany(mappedBy = "timetable", cascade = CascadeType.ALL)
     public List<Booking> getBookings() {
         return bookings;
     }

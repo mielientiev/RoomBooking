@@ -1,6 +1,7 @@
 package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.roombooking.utils.CustomJsonDateDeserializer;
 import org.hibernate.annotations.Cache;
@@ -9,39 +10,41 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.sql.Date;
 
-
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NamedQueries({
-        @NamedQuery(name = "Booking.findAllBookingByUserId",query =
-                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId"),
+        @NamedQuery(name = "Booking.findAllBookingsByUserId", query =
+                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId ORDER BY booking.date, booking.timetable.id"),
 
-        @NamedQuery(name = "Booking.findAllAvailableBookingByUserId", query =
-                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId AND booking.date>=:date"),
+        @NamedQuery(name = "Booking.findAllAvailableBookingsByUserId", query =
+                "SELECT booking FROM Booking booking " +
+                        "WHERE booking.user.id=:userId AND booking.date>=:date " +
+                        "ORDER BY booking.date, booking.timetable.id"),
 
-        @NamedQuery(name = "Booking.findBookingByRoomIdAndDate", query =
+        @NamedQuery(name = "Booking.findBookingsByRoomIdAndDate", query =
                 "SELECT b FROM Timetable timetable, Booking b, Room r " +
-                "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date " +
-                "AND r.id =:roomId order by timetable.id"),
+                        "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date " +
+                        "AND r.id =:roomId ORDER BY b.date, b.timetable.id"),
 
         @NamedQuery(name = "Booking.findBookingByRoomIdDateAndTimetableId", query =
                 "SELECT b FROM Timetable timetable, Booking b, Room r " +
                         "WHERE b.timetable.id = timetable.id AND timetable.id=:timeId " +
                         "AND b.room.id = r.id AND b.date =:date " +
-                        "AND r.id =:roomId order by timetable.id")
-
-
-
-
+                        "AND r.id =:roomId ORDER BY b.date, b.timetable.id")
 })
 public class Booking {
 
     private int id;
-    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+
     private Date date;
+
+    @JsonView(User.class)
     private User user;
+
     private Timetable timetable;
+
+    @JsonView(Room.class)
     private Room room;
 
     @Id
@@ -55,15 +58,25 @@ public class Booking {
         this.id = id;
     }
 
-
     @Basic
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     @Column(name = "date", nullable = false, insertable = true, updatable = true)
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new Date(date.getTime());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + date.hashCode();
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (timetable != null ? timetable.hashCode() : 0);
+        result = 31 * result + (room != null ? room.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -71,22 +84,15 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Booking that = (Booking) o;
+        Booking booking = (Booking) o;
 
-        if (id != that.id) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (id != booking.id) return false;
+        if (!date.equals(booking.date)) return false;
+        if (room != null ? !room.equals(booking.room) : booking.room != null) return false;
+        if (timetable != null ? !timetable.equals(booking.timetable) : booking.timetable != null) return false;
+        if (user != null ? !user.equals(booking.user) : booking.user != null) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + user.hashCode();
-        result = 31 * result + room.hashCode();
-        result = 31 * result + timetable.hashCode();
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
     }
 
     @ManyToOne

@@ -32,6 +32,12 @@ public class AbstractDao<T> implements Dao<T> {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public T findById(int id) {
+        return entityManager.find(this.entityClass, id);
+    }
+
+    @Override
     @Transactional
     public T update(T entity) {
         return entityManager.merge(entity);
@@ -51,12 +57,6 @@ public class AbstractDao<T> implements Dao<T> {
             return;
         }
         entityManager.remove(entity);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public T findById(int id) {
-        return entityManager.find(this.entityClass, id);
     }
 
     public EntityManager getEntityManager() {

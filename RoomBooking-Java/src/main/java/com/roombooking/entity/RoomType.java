@@ -14,8 +14,11 @@ import java.util.Set;
 public class RoomType {
 
     private int id;
+
     private String roomType;
+
     private Set<Rights> rights;
+
     private List<Room> rooms;
 
     @Id
@@ -40,6 +43,13 @@ public class RoomType {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -52,15 +62,7 @@ public class RoomType {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
-        return result;
-    }
-
-
-    @OneToMany(mappedBy = "roomType",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "roomType", cascade = CascadeType.ALL)
     public Set<Rights> getRights() {
         return rights;
     }
@@ -69,7 +71,7 @@ public class RoomType {
         this.rights = rightsById;
     }
 
-    @OneToMany(mappedBy = "roomType",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "roomType", cascade = CascadeType.ALL)
     public List<Room> getRooms() {
         return rooms;
     }

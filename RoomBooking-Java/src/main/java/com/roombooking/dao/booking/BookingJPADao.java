@@ -17,7 +17,7 @@ public class BookingJPADao extends AbstractDao<Booking> implements BookingDao {
     @Override
     @Transactional(readOnly = true)
     public List<Booking> getAllBookingsByUserId(int id) {
-        TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findAllBookingByUserId", entityClass);
+        TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findAllBookingsByUserId", entityClass);
         query.setParameter("userId", id);
         return query.getResultList();
     }
@@ -25,7 +25,7 @@ public class BookingJPADao extends AbstractDao<Booking> implements BookingDao {
     @Override
     @Transactional(readOnly = true)
     public List<Booking> getAvailableBookingsByUserId(int id) {
-        TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findAllAvailableBookingByUserId", entityClass);
+        TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findAllAvailableBookingsByUserId", entityClass);
         query.setParameter("userId", id);
         query.setParameter("date", new java.util.Date());
         return query.getResultList();
@@ -33,7 +33,7 @@ public class BookingJPADao extends AbstractDao<Booking> implements BookingDao {
 
     @Override
     public List<Booking> getBookingsByRoomIdAndDate(int id, Date date) {
-        TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findBookingByRoomIdAndDate", entityClass);
+        TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findBookingsByRoomIdAndDate", entityClass);
         query.setParameter("roomId", id);
         query.setParameter("date", date);
         return query.getResultList();

@@ -33,23 +33,11 @@ public class BookingService {
 
     public List<Booking> getAllBookingsByUserId(int id) {
         List<Booking> bookings = bookingDao.getAllBookingsByUserId(id);
-        if (!bookings.isEmpty()) {
-            cleanUnnecessaryFields(bookings);
-        }
         return bookings.isEmpty() ? null : bookings;
-    }
-
-    private void cleanUnnecessaryFields(List<Booking> bookings) {
-        for (Booking booking : bookings) {
-            booking.setUser(null);                                    //todo change this on JsonView
-        }
     }
 
     public List<Booking> getAvailableBookingsByUserId(int id) {
         List<Booking> bookings = bookingDao.getAvailableBookingsByUserId(id);
-        if (!bookings.isEmpty()) {
-            cleanUnnecessaryFields(bookings);
-        }
         return bookings.isEmpty() ? null : bookings;
     }
 
@@ -60,15 +48,7 @@ public class BookingService {
         } catch (IllegalStateException e) {
             return Collections.emptyList();
         }
-        List<Booking> bookings = bookingDao.getBookingsByRoomIdAndDate(id, convertedDate);
-        cleanRoom(bookings);
-        return bookings;
-    }
-
-    private void cleanRoom(List<Booking> bookings) {
-        for (Booking booking : bookings) {
-            booking.setRoom(null);                                    //todo change this on JsonView
-        }
+        return bookingDao.getBookingsByRoomIdAndDate(id, convertedDate);
     }
 
     public Booking addBooking(User user, Date date, int roomId, int timetableId) {
@@ -77,11 +57,18 @@ public class BookingService {
             logger.debug("Booking with roomId {}, date = {} and timeId {} exists", roomId, date, timetableId);
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Room room = roomDao.findById(roomId);
+
+        Room room = roomDao.getRoomByIdWithUserRights(roomId, user);
         if (room == null) {
             logger.debug("Room with bookingId#{} doesn't exist", roomId);
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
+        if (!room.getRoomType().getRights().iterator().next().getCanBookRoom()) {
+            logger.debug("User haven't rights to book this room! ", roomId);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
+
         Timetable timetable = timetableDao.findById(timetableId);
         if (timetable == null) {
             logger.debug("Timetable with bookingId#{} doesn't exist", timetableId);

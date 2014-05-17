@@ -1,6 +1,7 @@
 package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,8 +15,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Rights {
 
     private int id;
+
     private Boolean canBookRoom;
+
+    @JsonView({Rights.class})
     private Position position;
+
+    @JsonView({Rights.class})
     private RoomType roomType;
 
     @Id
@@ -29,7 +35,6 @@ public class Rights {
         this.id = id;
     }
 
-
     @Basic
     @Column(name = "can_book_room", nullable = true, insertable = true, updatable = true)
     public Boolean getCanBookRoom() {
@@ -41,23 +46,27 @@ public class Rights {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + canBookRoom.hashCode();
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Rights that = (Rights) o;
+        Rights rights = (Rights) o;
 
-        if (id != that.id) return false;
-        if (canBookRoom != null ? !canBookRoom.equals(that.canBookRoom) : that.canBookRoom != null) return false;
+        if (id != rights.id) return false;
+        if (!canBookRoom.equals(rights.canBookRoom)) return false;
+        if (position != null ? !position.equals(rights.position) : rights.position != null) return false;
+        if (roomType != null ? !roomType.equals(rights.roomType) : rights.roomType != null) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (canBookRoom != null ? canBookRoom.hashCode() : 0);
-        return result;
     }
 
     @ManyToOne

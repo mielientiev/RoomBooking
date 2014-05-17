@@ -1,5 +1,6 @@
 package com.roombooking.restapi;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.roombooking.entity.Room;
 import com.roombooking.entity.RoomType;
 import com.roombooking.entity.User;
@@ -27,6 +28,7 @@ public class RoomResource {
     private RoomService roomService;
 
     @GET
+    @JsonView({Room.class})
     @Path("/room/{id}")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,6 +45,7 @@ public class RoomResource {
     }
 
     @GET
+    @JsonView({Room.class})
     @Path("/rooms")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,6 +62,7 @@ public class RoomResource {
     }
 
     @GET
+    @JsonView({Room.class})
     @Path("/types")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,6 +78,7 @@ public class RoomResource {
     }
 
     @GET
+    @JsonView({Room.class})
     @Path("/type/{roomType}/places/{places}/board/{board}/computers/{computers}/projector/{projector}/name/{roomName}")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -95,6 +100,7 @@ public class RoomResource {
     }
 
     @GET
+    @JsonView({Room.class})
     @Path("/type/{roomType}/places/{places}/board/{board}/computers/{computers}/projector/{projector}/name/")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
@@ -106,7 +112,7 @@ public class RoomResource {
         logger.debug("Get filter rooms (name-empty): name-{}, type-{}, places-{}, computers-{}, board-{}, projector-{}",
                 roomType, places, computers, board, projector);
         User user = (User) servletRequest.getAttribute("CurrentUser");
-        List<Room> rooms = roomService.filterRooms(user,roomType, places, computers, board, projector, "");
+        List<Room> rooms = roomService.filterRooms(user, roomType, places, computers, board, projector, "");
         if (rooms.isEmpty()) {
             logger.debug("Filtered Rooms (name-empty) Not Found");
             throw new WebApplicationException(Response.Status.NOT_FOUND);

@@ -15,7 +15,9 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Role {
 
     private int id;
+
     private String title;
+
     private List<User> users;
 
     @Id
@@ -40,6 +42,13 @@ public class Role {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -52,14 +61,7 @@ public class Role {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     public List<User> getUsers() {
         return users;
     }

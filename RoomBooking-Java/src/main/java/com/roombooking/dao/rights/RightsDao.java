@@ -5,7 +5,6 @@ import com.roombooking.entity.Rights;
 
 import java.util.List;
 
-
 public interface RightsDao extends Dao<Rights> {
 
     List<Rights> getUserRights(int userId);

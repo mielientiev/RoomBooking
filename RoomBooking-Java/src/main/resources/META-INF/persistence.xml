@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         version="1.0"
         xmlns="http://java.sun.com/xml/ns/persistence"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence">
     <persistence-unit name="roomBE">
         <class>com.roombooking.entity.Booking</class>
@@ -15,13 +15,13 @@
         <class>com.roombooking.entity.Role</class>
 
         <!--<properties>-->
-            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
-            <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
-            <!--<property name="hibernate.show_sql" value="false"/>-->
-            <!--<property name="hibernate.format_sql" value="false"/>-->
-            <!--<property name="use_sql_comments" value="false"/>-->
-            <!--<property name="hibernate.cache.use_second_level_cache" value="true"/>-->
-            <!--<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>-->
+        <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
+        <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
+        <!--<property name="hibernate.show_sql" value="false"/>-->
+        <!--<property name="hibernate.format_sql" value="false"/>-->
+        <!--<property name="use_sql_comments" value="false"/>-->
+        <!--<property name="hibernate.cache.use_second_level_cache" value="true"/>-->
+        <!--<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>-->
         <!--</properties>-->
 
     </persistence-unit>
