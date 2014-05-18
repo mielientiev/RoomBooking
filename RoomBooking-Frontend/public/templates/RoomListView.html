@@ -1,0 +1,26 @@
+<a href="#rooms/<%= id %>" class="roomlist-item">
+<table class = "table room-card-table">
+<h2 class="h2"><%= roomName %></h1>
+<tr>
+	<td>Type :</td>
+	<td><%= roomType["roomType"] %></td>
+</tr>
+<tr>
+	<td>Capacity :</td>
+	<td><%= places %></td>
+</tr>
+<tr>
+	<td>Computers:</td>
+	<td><%= computers != 0 ? computers : " &#x2717;"%></td>
+</tr>
+<tr>
+	<td>Projector :</td>
+	<td><%= projector == true? "&#10003;" : " &#x2717;" %></td>
+</tr>
+<tr>
+	<td>Board :</td>
+	<td><%= board == true? "&#10003;" : " &#x2717;" %></td>
+</tr>
+
+<table>
+</a>

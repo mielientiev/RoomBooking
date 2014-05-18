@@ -1,0 +1,54 @@
+<script data-main='js/boot' type="text/javascript" src='/js/libs/jquery-ui.js'></script>
+<form class="form-horizontal myform">
+  <fieldset>
+    <legend><h1><%= roomName %></h1></legend>
+    <h2>General Information:</h2>
+    <table class="room-details-table">
+    <tr>
+        <td><label class="col-lg-2 control-label">Floor:</label></td>
+        <td><label class="col-lg-2 control-label"><%= floor %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Capacity:</label></td>
+        <td><label class="col-lg-2 control-label"><%= places %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Computers:</label></td>
+        <td><label class="col-lg-2 control-label"><%= computers != 0 ? computers :
+        "<span class='has-no-prop'> &#x2717;"%></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Projector:</label></td>
+        <td><label class="col-lg-2 control-label"><%= projector == true?
+        "<span class='has-prop'>&#10003;</span>" : "<span class='has-no-prop'>&#x2717;</span>" %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Board:</label></td>
+        <td><label class="col-lg-2 control-label"><%= board == true?
+        "<span class='has-prop'>&#10003;" : "<span class='has-no-prop'>&#x2717;</span>" %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Type:</label></td>
+        <td><label class="col-lg-2 control-label"><%= roomType["roomType"] %></label></td>
+    </tr>
+    </table>
+    <h2>Booking:</h2>
+    <table class="datepicker-table">
+    <tr>
+        <td><div id="datepicker"></div></td>
+        <td>
+            <div id="pairs" class="btn-group-vertical btn-group-pair">
+            </div>
+        </td>
+    </tr>
+    </table>
+    
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button class="btn btn-default">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
