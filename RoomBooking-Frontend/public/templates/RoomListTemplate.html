@@ -1,0 +1,53 @@
+<div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <span class="filter-label">Room name:</span>
+    <form class="navbar-form navbar-left">
+      <input type="text" class="filter-input" id="roomName" placeholder="Name">
+    </form>
+    <span class="filter-label">Capacity:</span>
+    <form class="navbar-form navbar-left">
+      <input type="number" class="filter-input" id="places" placeholder="Cap.">
+    </form>
+    </form>
+    <span class="filter-label">Computers:</span>
+    <form class="navbar-form navbar-left">
+      <input type="number" class="filter-input" id="computers" placeholder="Comps">
+    </form>
+    <ul class="nav navbar-nav">
+    <li class="dropdown filter-dropdown">
+        <a href="#" class="dropdown-toggle" value="" data-toggle="dropdown" id="type">All types <b class="caret"></b></a>
+        <ul class="dropdown-menu" id="typeList">
+          <li><a class="my-option" id="all-types">All types</a></li>
+          <li class="divider"></li>
+        </ul>
+      </li>
+      <li class="dropdown filter-dropdown-small">
+        <a href="#" class="dropdown-toggle" id="avaliable" data-toggle="dropdown">Only avaliable<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a class="my-option" id="avail-only">Only avaliable</a></li>
+          <li><a class="my-option" id="all">All</a></li>
+        </ul>
+      </li>
+      <li><div class="filter-checkbox">
+      <input type="checkbox" id="board"> Board 
+      </div>
+      </li>
+      <li><div class="filter-checkbox">
+      <input type="checkbox" id="projector"> Projector 
+      </div>
+      </li>
+      <li><div class="filter-button">
+      <button class="btn btn-success btn-filter" id="search">Search</button>
+      </div>
+      </li>
+      </ul>
+  </div>
+</div>
+<div id="list-container">
+	<ul class="thumbnails"></ul>
+</div>

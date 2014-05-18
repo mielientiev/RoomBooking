@@ -95,14 +95,15 @@
 /*custom section*/
 
 #content {
-	width: 90%;
+
+	width: 95%;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-h2,
-.h2 {
+h1,
+h2 .h2 {
 	margin-top: 5px;
 	padding-left: 10%;
 }
@@ -177,13 +178,78 @@ h2,
 
 .btn-pair {
   border: 1px solid #ffffff;
-  padding: 4px;
+  border-radius: 2px;
+  padding: 5.5px;
   vertical-align: center;
 }
 
 .btn-group-pair {
+  border: 2px solid #dddddd;
   margin-left: 20px;
   height: 100%;
   width: 100%;
-  width: 400px;
+  width: 400px;border-radius: 2px;
+}
+
+.submit-booking {
+  padding: 20px;
+}
+
+#submit-booking-btn {
+  margin-left: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#booking-div {
+  margin-bottom: 30px;
+}
+
+.filter-input {
+  width: 75px;
+  padding: 3px;
+  margin-top: 5px;
+}
+
+.filter-checkbox {
+  color: #ffffff;
+  margin: 13px;
+  margin-left: 30px;
+}
+
+.btn-filter {
+  padding: 4px;
+  margin: 4px;
+}
+
+.filter-button {
+  margin: 5px;
+  margin-left: 40px;
+}
+
+.filter-dropdown {
+  width: 200px;
+}
+
+.filter-dropdown-small {
+  width: 150px;
+}
+
+.filter-label {
+  color: #ffffff;
+  float: left;
+  padding: 14.5px 15px;
+  padding-right: 0px;
+  font-size: 14px;
+  line-height: 21px;
+  height: 50px;
+}
+
+.filter-label:hover,
+.filter-label:focus {
+  text-decoration: none;
+}
+
+.my-option:hover {
+  cursor: pointer;
 }

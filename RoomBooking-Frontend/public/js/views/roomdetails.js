@@ -4,6 +4,10 @@ define(['text!templates/RoomView.html', 'models/Room', 'models/RoomCollection'],
 var roomdetails = Backbone.View.extend({
 	el : $('#content'),
 	template: _.template(RoomViewTemplate),
+	selectedBtn: null,
+	selectedVal: null,
+	selectedDate: null,
+	todayDate: null,
 
 	initialize : function() {
 	},
@@ -11,8 +15,10 @@ var roomdetails = Backbone.View.extend({
 	initDatepicker : function() {
 		var that = this;
 		$("#datepicker").datepicker({
-        	onSelect: function(selected,evnt) {
+        	onSelect: function(selected, e) { 
+        		$("#pairs").empty();       		      		
          		that.getPairs(selected);
+         		that.selectedDate = selected;
     		}
         });
         var today = new Date();
@@ -29,67 +35,128 @@ var roomdetails = Backbone.View.extend({
 		} 
 
 		today = mm+'/'+dd+'/'+yyyy;
-        $("#datepicker").datepicker( "setDate", today );        
+        $("#datepicker").datepicker( "setDate", today );
+        $( "#datepicker" ).datepicker("option", "minDate", 0);
         $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
-        this.getPairs(yyyy+'-'+mm+'-'+dd);
+        this.selectedDate = yyyy+'-'+mm+'-'+dd;
+        this.getPairs(this.selectedDate);
 	},
 
 	getPairs : function(date) {
 		var that = this;
+		var allPairs;
 		$.ajax({
 		  url: 'http://roombooking-ejournal.rhcloud.com/timetable',
 		  type: 'get',
 		  beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
           success: function(data) {
+          		allPairs = data;
                	that.setPairsTable(data);
-          }
-		});
-
-		var requestURL = 	'http://roombooking-ejournal.rhcloud.com/timetable/room-' +
-							this.model.attributes.id +
+               	var requestURL = 	'http://roombooking-ejournal.rhcloud.com/timetable/room-' +
+							that.model.attributes.id +
 							'/' +
 							date;
-		$.ajax({
-		  url: requestURL,
-		  type: 'get',
-		  beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
-          success: function(data) {
-               	that.adjustPairsTable(data);
+				$.ajax({
+				  url: requestURL,
+				  type: 'get',
+				  beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
+		          success: function(data) {
+		               	that.adjustPairsTable(data, allPairs);
+		          },
+		          error : function() {
+		               	that.adjustPairsTable(0, allPairs);
+		          }
+				});
           }
-		});
+		});		
 	},
 
-	adjustPairsTable : function(data) {
+	adjustPairsTable : function(data, allPairs) {
+		var idArr = [];
 		for(a in data) {
-			var query = "#pair" + data[a].id;
-			$(query).removeClass("btn-success");
-			$(query).addClass("btn-warning");
-			$(query).prop( "disabled", true );
+			idArr.push(data[a].id);
+		}
+		console.log(idArr);
+		for(i = 0; i < allPairs.length; i++) {
+			var query = "#pair" + allPairs[i].id;
+			if(idArr.indexOf(allPairs[i].id) != -1) {
+				$(query).addClass("btn-danger");
+			}
+			else {
+				$(query).addClass("btn-success");
+				$(query).prop( "disabled", false );
+			}
 		}
 	},
 
 	setPairsTable : function(data) {
+		var that = this;
 		$("#pairs").empty();
-		var template = '<button type="button" class="btn btn-success btn-pair">Button</button>';
 		for(i = 0; i < data.length; i++) {
 			var startSplit = data[i].start.split(':');
 			var start = startSplit[0] + ":" + startSplit[1];
 			var endSplit = data[i].end.split(':');
 			var end = endSplit[0] + ":" + endSplit[1];
-			var btn = 	'<button type="button" class="btn btn-success btn-pair" id="pair' +
-						data[i].id + '">' +
+			var btn = 	'<button type="button" class="btn btn-pair" id="pair' +
+						data[i].id + '" value="' +
+						data[i].id + '"disabled>' +
 						data[i].id + '. ' +
 						start + ' - ' +
 						end +
-						'</button>'
+						'</button>';
 			$("#pairs").append(btn);
+			$('#pair' + data[i].id).click(function() { that.selectPair(this); });
 		}
+	},
+
+	selectPair : function(e) {
+		if(this.selectedVal) {
+			this.selectedBtn.removeClass("btn-primary");
+			this.selectedBtn.addClass("btn-success");
+		}
+		var btn = $("#" + e.id);
+		btn.removeClass("btn-success");
+		btn.addClass("btn-primary");
+		this.selectedBtn = btn;
+		this.selectedVal = btn.val();
+		$("#submit-booking-btn").prop("disabled", false);
+	},
+
+	bookRoom : function() {
+		var that = this;
+		var timetable = { id : that.selectedVal };
+		var room = { id : that.model.attributes.id.toString() }
+		var newBooking = {
+			date: that.selectedDate,
+			timetable : timetable,
+			room : room,
+			id: 1
+		};
+		$.ajax({
+				url: "http://roombooking-ejournal.rhcloud.com/booking",
+				data: JSON.stringify(newBooking),
+    			type: 'PUT',
+    			beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
+   				contentType: 'application/json',
+		         success: function(data) {
+		               	that.returnToSelect();
+		          }
+				});
+		console.log(newBooking);
+
+	},
+
+	returnToSelect : function() {
+		window.location = "#";
 	},
 
 	render: function() {
 		var that = this;
 		$(this.el).html(that.template(that.model.toJSON()));
         this.initDatepicker();
+        $("#submit-booking-btn").click(function(e) {
+        	that.bookRoom();
+        })
 		return this;
 	}
 
