@@ -4,10 +4,13 @@ define(['text!templates/RoomView.html', 'models/Room', 'models/RoomCollection'],
 var roomdetails = Backbone.View.extend({
 	el : $('#content'),
 	template: _.template(RoomViewTemplate),
+<<<<<<< HEAD
 	selectedBtn: null,
 	selectedVal: null,
 	selectedDate: null,
 	todayDate: null,
+=======
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 
 	initialize : function() {
 	},
@@ -15,10 +18,15 @@ var roomdetails = Backbone.View.extend({
 	initDatepicker : function() {
 		var that = this;
 		$("#datepicker").datepicker({
+<<<<<<< HEAD
         	onSelect: function(selected, e) { 
         		$("#pairs").empty();       		      		
          		that.getPairs(selected);
          		that.selectedDate = selected;
+=======
+        	onSelect: function(selected,evnt) {
+         		that.getPairs(selected);
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
     		}
         });
         var today = new Date();
@@ -35,21 +43,31 @@ var roomdetails = Backbone.View.extend({
 		} 
 
 		today = mm+'/'+dd+'/'+yyyy;
+<<<<<<< HEAD
         $("#datepicker").datepicker( "setDate", today );
         $( "#datepicker" ).datepicker("option", "minDate", 0);
         $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
         this.selectedDate = yyyy+'-'+mm+'-'+dd;
         this.getPairs(this.selectedDate);
+=======
+        $("#datepicker").datepicker( "setDate", today );        
+        $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+        this.getPairs(yyyy+'-'+mm+'-'+dd);
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 	},
 
 	getPairs : function(date) {
 		var that = this;
+<<<<<<< HEAD
 		var allPairs;
+=======
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 		$.ajax({
 		  url: 'http://roombooking-ejournal.rhcloud.com/timetable',
 		  type: 'get',
 		  beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
           success: function(data) {
+<<<<<<< HEAD
           		allPairs = data;
                	that.setPairsTable(data);
                	var requestURL = 	'http://roombooking-ejournal.rhcloud.com/timetable/room-' +
@@ -86,17 +104,49 @@ var roomdetails = Backbone.View.extend({
 				$(query).addClass("btn-success");
 				$(query).prop( "disabled", false );
 			}
+=======
+               	that.setPairsTable(data);
+          }
+		});
+
+		var requestURL = 	'http://roombooking-ejournal.rhcloud.com/timetable/room-' +
+							this.model.attributes.id +
+							'/' +
+							date;
+		$.ajax({
+		  url: requestURL,
+		  type: 'get',
+		  beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
+          success: function(data) {
+               	that.adjustPairsTable(data);
+          }
+		});
+	},
+
+	adjustPairsTable : function(data) {
+		for(a in data) {
+			var query = "#pair" + data[a].id;
+			$(query).removeClass("btn-success");
+			$(query).addClass("btn-warning");
+			$(query).prop( "disabled", true );
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 		}
 	},
 
 	setPairsTable : function(data) {
+<<<<<<< HEAD
 		var that = this;
 		$("#pairs").empty();
+=======
+		$("#pairs").empty();
+		var template = '<button type="button" class="btn btn-success btn-pair">Button</button>';
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 		for(i = 0; i < data.length; i++) {
 			var startSplit = data[i].start.split(':');
 			var start = startSplit[0] + ":" + startSplit[1];
 			var endSplit = data[i].end.split(':');
 			var end = endSplit[0] + ":" + endSplit[1];
+<<<<<<< HEAD
 			var btn = 	'<button type="button" class="btn btn-pair" id="pair' +
 						data[i].id + '" value="' +
 						data[i].id + '"disabled>' +
@@ -148,15 +198,28 @@ var roomdetails = Backbone.View.extend({
 
 	returnToSelect : function() {
 		window.location = "#";
+=======
+			var btn = 	'<button type="button" class="btn btn-success btn-pair" id="pair' +
+						data[i].id + '">' +
+						data[i].id + '. ' +
+						start + ' - ' +
+						end +
+						'</button>'
+			$("#pairs").append(btn);
+		}
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 	},
 
 	render: function() {
 		var that = this;
 		$(this.el).html(that.template(that.model.toJSON()));
         this.initDatepicker();
+<<<<<<< HEAD
         $("#submit-booking-btn").click(function(e) {
         	that.bookRoom();
         })
+=======
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 		return this;
 	}
 

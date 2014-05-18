@@ -95,15 +95,24 @@
 /*custom section*/
 
 #content {
+<<<<<<< HEAD
 
 	width: 95%;
+=======
+	width: 90%;
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
+<<<<<<< HEAD
 h1,
 h2 .h2 {
+=======
+h2,
+.h2 {
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 	margin-top: 5px;
 	padding-left: 10%;
 }
@@ -178,12 +187,17 @@ h2 .h2 {
 
 .btn-pair {
   border: 1px solid #ffffff;
+<<<<<<< HEAD
   border-radius: 2px;
   padding: 5.5px;
+=======
+  padding: 4px;
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
   vertical-align: center;
 }
 
 .btn-group-pair {
+<<<<<<< HEAD
   border: 2px solid #dddddd;
   margin-left: 20px;
   height: 100%;
@@ -252,4 +266,10 @@ h2 .h2 {
 
 .my-option:hover {
   cursor: pointer;
+=======
+  margin-left: 20px;
+  height: 100%;
+  width: 100%;
+  width: 400px;
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 }

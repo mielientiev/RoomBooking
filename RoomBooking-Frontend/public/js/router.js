@@ -25,11 +25,18 @@ define(
         list: function(page) {
 
             var p = page ? parseInt(page, 10) : 1;
+<<<<<<< HEAD
             var r = new Room();
             var roomList = new RoomCollection();
             
             roomList.fetch({
                 beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'ZXZnZXNoYToxMjM0')},
+=======
+            var roomList = new RoomCollection();
+
+            roomList.fetch({
+                beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
+>>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
                 success: function() {
                     $("#content").html(new RoomListView({model: roomList, page: p}).el);
                 }
