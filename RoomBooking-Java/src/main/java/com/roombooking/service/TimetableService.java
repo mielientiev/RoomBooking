@@ -27,7 +27,7 @@ public class TimetableService {
         Date convertedDate;
         try {
             convertedDate = Date.valueOf(date);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             return Collections.emptyList();
         }
         return timetableDao.getTimetableByRoomIdAndDate(id, convertedDate);
