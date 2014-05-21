@@ -16,8 +16,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -78,6 +76,25 @@ public class BookingResource {
         return timetable;
     }
 
+    @GET
+    @JsonView({Room.class})
+    @Path("/{dateFrom}/{dateTo}")
+    @RolesAllowed({"Admin", "User"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Booking> getUserBookingsByDateRange(@PathParam("dateFrom") String dateFrom,
+                                                    @PathParam("dateTo") String dateTo,
+                                                    @Context HttpServletRequest servletRequest) {
+        User user = (User) servletRequest.getAttribute("CurrentUser");
+        logger.debug("Get Booking by dateFrom #{}; dateTo {}", dateFrom, dateTo);
+        List<Booking> timetable = bookingService.filterUserBookingsByDate(user.getId(), dateFrom, dateTo);
+        if (timetable.isEmpty()) {
+            logger.debug("Booking by by dateFrom #{}; dateTo {}", dateFrom, dateTo);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        logger.debug("Booking by dateFrom #{}; dateTo {} found", dateFrom, dateTo);
+        return timetable;
+    }
+
     @PUT
     @JsonView({Room.class})
     @RolesAllowed({"Admin", "User"})
@@ -89,12 +106,6 @@ public class BookingResource {
         if (booking == null || booking.getDate() == null || booking.getRoom() == null || booking.getTimetable() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        String bookingDate = booking.getDate().toString();
-        String now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        if (bookingDate.compareTo(now) < 0) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-
         Booking createdBooking = bookingService.addBooking(user, booking.getDate(), booking.getRoom().getId(), booking.getTimetable().getId());
         return Response.ok().entity(createdBooking).build();
     }

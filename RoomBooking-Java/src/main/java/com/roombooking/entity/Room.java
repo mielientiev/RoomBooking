@@ -14,9 +14,9 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 @NamedQueries({
         @NamedQuery(name = "Room.findAllRoomsWithUserPositionRights", query =
-                "SELECT room FROM  Room as room, User u \n" +
-                        "INNER JOIN fetch room.roomType as rtype \n" +
-                        "INNER JOIN fetch rtype.rights as rights \n" +
+                "SELECT room FROM  Room room, User u " +
+                        "INNER JOIN fetch room.roomType as rtype " +
+                        "INNER JOIN fetch rtype.rights as rights " +
                         "WHERE rights.position.id = u.position.id AND u.id =:usid"),
 
         @NamedQuery(name = "Room.findRoomByIdWithUserPositionRights", query =
@@ -26,9 +26,20 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
                         "WHERE room.id=:roomId AND rights.position.id = u.position.id AND u.id =:usid"),
 
         @NamedQuery(name = "Room.filterRooms", query =
-                "SELECT r FROM Room r " +
-                        "WHERE r.places>=:places AND r.computers>=:comp AND r.projector>=:proj AND r.board>=:board " +
-                        "AND r.roomType.id =:typeid AND r.roomName LIKE :roomName")
+                "SELECT r FROM  Room r, User u " +
+                        "INNER JOIN fetch r.roomType as rtype " +
+                        "INNER JOIN fetch rtype.rights as rights " +
+                        "WHERE rights.position.id = u.position.id AND u.id =:usid " +
+                        "AND r.places>=:places AND r.computers>=:comp AND r.projector>=:proj AND r.board>=:board " +
+                        "AND r.roomType.id =:typeid AND r.roomName LIKE :roomName"),
+
+        @NamedQuery(name = "Room.findAllFreeRoomsByDateAndTimetable", query =
+                "SELECT r FROM  Room r, User u " +
+                        "INNER JOIN fetch r.roomType as rtype " +
+                        "INNER JOIN fetch rtype.rights as rights " +
+                        "WHERE rights.position.id = u.position.id AND u.id =:usid AND r.id NOT IN " +
+                        "(SELECT r2.id FROM Room r2 LEFT JOIN r2.bookings as book " +
+                        "WHERE book.date =:date AND book.timetable.id =:timetableId)"),
 })
 
 public class Room {

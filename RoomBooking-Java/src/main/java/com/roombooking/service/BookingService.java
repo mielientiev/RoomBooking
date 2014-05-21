@@ -14,8 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.List;
 
 public class BookingService {
@@ -46,7 +47,7 @@ public class BookingService {
         try {
             convertedDate = Date.valueOf(date);
         } catch (IllegalStateException e) {
-            return Collections.emptyList();
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         return bookingDao.getBookingsByRoomIdAndDate(id, convertedDate);
     }
@@ -55,6 +56,11 @@ public class BookingService {
         List<Booking> list = bookingDao.getBookingsByRoomIdDateAndTimetableId(date, roomId, timetableId);
         if (!list.isEmpty()) {
             logger.debug("Booking with roomId {}, date = {} and timeId {} exists", roomId, date, timetableId);
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Timetable timetable = timetableDao.findById(timetableId);
+        if (timetable == null || !canBookAtThisTimeAndDate(date, timetable.getStart())) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
@@ -69,11 +75,6 @@ public class BookingService {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
 
-        Timetable timetable = timetableDao.findById(timetableId);
-        if (timetable == null) {
-            logger.debug("Timetable with bookingId#{} doesn't exist", timetableId);
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
         Booking booking = new Booking();
         booking.setDate(date);
         booking.setRoom(room);
@@ -83,6 +84,26 @@ public class BookingService {
         return booking;
     }
 
+    /**
+     * Check if user can book room at this date and time
+     *
+     * @param bookingDate        - date when user want to book room
+     * @param timeOfLectureStart - time of lecture start (timetable.getStart())
+     * @return if `date` more than NOW returns true. If `date` == NOW and current time < time - returns true else false
+     */
+    private boolean canBookAtThisTimeAndDate(Date bookingDate, Time timeOfLectureStart) {
+        String date = bookingDate.toString();
+        String now = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+        Calendar calendar = Calendar.getInstance();
+        Time currentTime = Time.valueOf(
+                calendar.get(Calendar.HOUR_OF_DAY) + ":" +
+                        calendar.get(Calendar.MINUTE) + ":" +
+                        calendar.get(Calendar.SECOND)
+        );
+
+        return date.compareTo(now) >= 0 && !(date.compareTo(now) == 0 && currentTime.after(timeOfLectureStart));
+    }
+
     public void deleteUserBooking(int bookingId, User user) {
         Booking booking = bookingDao.findById(bookingId);
         if (booking == null) {
@@ -90,10 +111,9 @@ public class BookingService {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
-        String bookingDate = booking.getDate().toString();
-        String now = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-        if (bookingDate.compareTo(now) < 0) {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        Timetable timetable = booking.getTimetable();
+        if (timetable == null || !canBookAtThisTimeAndDate(booking.getDate(), timetable.getStart())) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         if (!booking.getUser().equals(user)) {
@@ -104,4 +124,19 @@ public class BookingService {
         bookingDao.deleteById(bookingId);
     }
 
+    public List<Booking> filterUserBookingsByDate(int userId, String dateFrom, String dateTo) {
+        Date fromDate, toDate;
+        try {
+            fromDate = Date.valueOf(dateFrom);
+            toDate = Date.valueOf(dateTo);
+        } catch (IllegalStateException e) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (fromDate.after(toDate)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return bookingDao.filterUserBookingsByDate(userId, fromDate, toDate);
+    }
 }

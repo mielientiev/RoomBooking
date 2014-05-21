@@ -1,6 +1,10 @@
 package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.roombooking.utils.JsonTimeDeserializer;
+import com.roombooking.utils.JsonTimeSerializer;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -15,8 +19,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 @NamedQueries({
         @NamedQuery(name = "Timetable.findTimetableByRoomIdAndDate", query =
-                "SELECT timetable FROM Timetable timetable, Booking b, Room r " +
-                        "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date AND r.id =:roomId")
+                "SELECT timetable FROM Timetable timetable, Booking b " +
+                        "WHERE b.timetable.id = timetable.id AND b.date =:date AND b.room.id=:roomId")
 })
 public class Timetable {
 
@@ -40,6 +44,8 @@ public class Timetable {
     }
 
     @Basic
+    @JsonSerialize(using = JsonTimeSerializer.class)
+    @JsonDeserialize(using = JsonTimeDeserializer.class)
     @Column(name = "start", nullable = false, insertable = true, updatable = true)
     public Time getStart() {
         return start;
@@ -50,6 +56,8 @@ public class Timetable {
     }
 
     @Basic
+    @JsonSerialize(using = JsonTimeSerializer.class)
+    @JsonDeserialize(using = JsonTimeDeserializer.class)
     @Column(name = "end", nullable = false, insertable = true, updatable = true)
     public Time getEnd() {
         return end;

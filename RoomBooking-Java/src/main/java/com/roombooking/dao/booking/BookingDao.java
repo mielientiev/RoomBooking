@@ -15,4 +15,7 @@ public interface BookingDao extends Dao<Booking> {
     List<Booking> getBookingsByRoomIdAndDate(int id, Date date);
 
     List<Booking> getBookingsByRoomIdDateAndTimetableId(Date date, int roomId, int timeId);
+
+    List<Booking> filterUserBookingsByDate(int userId, Date fromDate, Date toDate);
+
 }

@@ -121,4 +121,23 @@ public class RoomResource {
         return rooms;
     }
 
+    @GET
+    @JsonView({Room.class})
+    @Path("/rooms/{date}/{timetableId}")
+    @RolesAllowed({"Admin", "User"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Room> getAllFreeRoomsByDateAndTimetable(@PathParam("date") String date,
+                                                        @PathParam("timetableId") int timetableId,
+                                                        @Context HttpServletRequest servletRequest) {
+
+        User user = (User) servletRequest.getAttribute("CurrentUser");
+        List<Room> rooms = roomService.getAllFreeRoomsByDateAndTimetable(user.getId(), date, timetableId);
+        if (rooms.isEmpty()) {
+            logger.debug("Rooms Not Found");
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        logger.debug("Rooms Found");
+        return rooms;
+    }
+
 }

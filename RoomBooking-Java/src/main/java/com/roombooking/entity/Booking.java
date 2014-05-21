@@ -3,7 +3,7 @@ package com.roombooking.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.roombooking.utils.CustomJsonDateDeserializer;
+import com.roombooking.utils.JsonDateDeserializer;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,15 +23,19 @@ import java.sql.Date;
                         "ORDER BY booking.date, booking.timetable.id"),
 
         @NamedQuery(name = "Booking.findBookingsByRoomIdAndDate", query =
-                "SELECT b FROM Timetable timetable, Booking b, Room r " +
-                        "WHERE b.timetable.id = timetable.id AND b.room.id = r.id AND b.date =:date " +
-                        "AND r.id =:roomId ORDER BY b.date, b.timetable.id"),
+                "SELECT b FROM Timetable timetable, Booking b " +
+                        "WHERE b.timetable.id = timetable.id AND b.room.id =:roomId AND b.date =:date " +
+                        "ORDER BY b.date, b.timetable.id"),
 
         @NamedQuery(name = "Booking.findBookingByRoomIdDateAndTimetableId", query =
-                "SELECT b FROM Timetable timetable, Booking b, Room r " +
-                        "WHERE b.timetable.id = timetable.id AND timetable.id=:timeId " +
-                        "AND b.room.id = r.id AND b.date =:date " +
-                        "AND r.id =:roomId ORDER BY b.date, b.timetable.id")
+                "SELECT b FROM Booking b " +
+                        "WHERE b.timetable.id =:timeId AND b.room.id =:roomId AND b.date =:date " +
+                        "ORDER BY b.date, b.timetable.id"),
+
+        @NamedQuery(name = "Booking.filterBookingByDate", query =
+                "SELECT b FROM Booking b " +
+                        "WHERE b.user.id=:userId AND b.date between :dateFrom AND :dateTo ORDER BY b.date"),
+
 })
 public class Booking {
 
@@ -59,7 +63,7 @@ public class Booking {
     }
 
     @Basic
-    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
     @Column(name = "date", nullable = false, insertable = true, updatable = true)
     public Date getDate() {
         return new Date(date.getTime());
