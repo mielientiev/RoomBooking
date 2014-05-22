@@ -25,11 +25,18 @@
     <!--Beans-->
 
     <!--JPA (Hibernate)-->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="username" value="${login}"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="user" value="${login}"/>
         <property name="password" value="${password}"/>
-        <property name="url" value="${mysql-uri}"/>
-        <property name="driverClassName" value="${mysql-driver}"/>
+        <property name="jdbcUrl" value="${mysql-uri}"/>
+        <property name="driverClass" value="${mysql-driver}"/>
+
+        <property name="acquireIncrement" value="3"/>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="maxIdleTime" value="3600"/>
+        <property name="maxIdleTimeExcessConnections" value="300"/>
+        <property name="unreturnedConnectionTimeout" value="3600"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -47,6 +54,8 @@
                 <prop key="use_sql_comments">false</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                <prop key="hibernate.connection.charSet">UTF-8</prop>
             </props>
         </property>
     </bean>

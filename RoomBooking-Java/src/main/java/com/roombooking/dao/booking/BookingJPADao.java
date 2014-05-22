@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 public class BookingJPADao extends AbstractDao<Booking> implements BookingDao {
@@ -28,6 +29,7 @@ public class BookingJPADao extends AbstractDao<Booking> implements BookingDao {
         TypedQuery<Booking> query = getEntityManager().createNamedQuery("Booking.findAllAvailableBookingsByUserId", entityClass);
         query.setParameter("userId", id);
         query.setParameter("date", new java.util.Date());
+        query.setParameter("time", new Time(new java.util.Date().getTime()));
         return query.getResultList();
     }
 
