@@ -24,13 +24,13 @@ public class BookingService {
     private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
 
     @Autowired
-    private BookingDao bookingDao;
+    protected BookingDao bookingDao;
 
     @Autowired
-    private RoomDao roomDao;
+    protected RoomDao roomDao;
 
     @Autowired
-    private TimetableDao timetableDao;
+    protected TimetableDao timetableDao;
 
     public List<Booking> getAllBookingsByUserId(int id) {
         List<Booking> bookings = bookingDao.getAllBookingsByUserId(id);
@@ -46,7 +46,7 @@ public class BookingService {
         Date convertedDate;
         try {
             convertedDate = Date.valueOf(date);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         return bookingDao.getBookingsByRoomIdAndDate(id, convertedDate);
@@ -117,7 +117,7 @@ public class BookingService {
         }
 
         if (!booking.getUser().equals(user)) {
-            logger.debug("This user cannot delete booking #{}", bookingId);
+            logger.debug("This user cannot delete not his booking #{}", bookingId);
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
 

@@ -7,4 +7,6 @@ public interface UserDao extends Dao<User> {
 
     User findByLoginPassword(String login, String password);
 
+    User findByLogin(String login);
+
 }

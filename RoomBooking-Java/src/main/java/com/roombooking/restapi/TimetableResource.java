@@ -65,4 +65,6 @@ public class TimetableResource {
         logger.debug("Timetable by room #{} on {} Found", id, date);
         return timetable;
     }
+
+
 }

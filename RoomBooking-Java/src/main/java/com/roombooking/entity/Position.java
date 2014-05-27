@@ -63,6 +63,7 @@ public class Position {
         return true;
     }
 
+
     @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     public List<Rights> getRights() {
         return rights;

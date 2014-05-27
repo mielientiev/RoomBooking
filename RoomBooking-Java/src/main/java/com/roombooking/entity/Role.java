@@ -9,6 +9,9 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * Role {Admin, User}
+ */
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)

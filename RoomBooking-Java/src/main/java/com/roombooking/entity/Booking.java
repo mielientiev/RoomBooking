@@ -19,7 +19,7 @@ import java.sql.Date;
 
         @NamedQuery(name = "Booking.findAllAvailableBookingsByUserId", query =
                 "SELECT booking FROM Booking booking " +
-                        "WHERE booking.user.id=:userId AND booking.date>=:date AND booking.timetable.start>=:time " +
+                        "WHERE booking.user.id=:userId AND (booking.date>:date OR (booking.date=:date AND booking.timetable.start>=:time)) " +
                         "ORDER BY booking.date, booking.timetable.id"),
 
         @NamedQuery(name = "Booking.findBookingsByRoomIdAndDate", query =

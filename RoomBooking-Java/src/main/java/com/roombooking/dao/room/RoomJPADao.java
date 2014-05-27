@@ -57,4 +57,21 @@ public class RoomJPADao extends AbstractDao<Room> implements RoomDao {
         return query.getResultList();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Room> getAllFreeRoomsByDate(int userId, Date date) {
+        TypedQuery<Room> query = getEntityManager().createNamedQuery("Room.findAllFreeRoomsByDate", entityClass);
+        query.setParameter("usid", userId);
+        query.setParameter("date", date);
+        return query.getResultList();
+    }
+
+    @Override
+    public Room findByRoomName(String roomName) {
+        TypedQuery<Room> query = getEntityManager().createNamedQuery("Room.findRoomByName", entityClass);
+        query.setParameter("roomName", roomName);
+        List<Room> rooms = query.getResultList();
+        return rooms.isEmpty() ? null : rooms.get(0);
+    }
+
 }

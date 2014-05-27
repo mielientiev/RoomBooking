@@ -40,7 +40,7 @@ public class UserResource {
     }
 
     @GET
-    @Path("/user/")
+    @Path("/user")
     @RolesAllowed({"Admin", "User"})
     @Produces(MediaType.APPLICATION_JSON)
     public User getCurrentUser(@Context HttpServletRequest servletRequest) {
@@ -68,6 +68,47 @@ public class UserResource {
         }
         logger.debug("Users Found");
         return users;
+    }
+
+    @PUT
+    @Path("/user")
+    @RolesAllowed({"Admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addUser(User user) {
+        if (!isUserValid(user)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        User addedUser = userService.addNewUser(user);
+        return Response.ok().entity(addedUser).build();
+    }
+
+    private boolean isUserValid(User user) {
+        return !(user == null || user.getLogin() == null || user.getPassword() == null || user.getPosition() == null
+                || user.getRole() == null || user.getFirstName() == null || user.getSecondName() == null);
+    }
+
+    @DELETE
+    @Path("/user/{id}")
+    @RolesAllowed({"Admin"})
+    public Response deleteUser(@PathParam("id") int id) {
+        userService.deleteUserById(id);
+        return Response.noContent().build();
+    }
+
+    @POST
+    @Path("/user/{id}")
+    @RolesAllowed({"Admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response editUser(@PathParam("id") int id, User user) {
+        if (!isUserValid(user)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        User editedUser = userService.editUser(id, user);
+        return Response.ok().entity(editedUser).build();
     }
 
 }

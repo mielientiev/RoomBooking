@@ -12,6 +12,7 @@ import java.util.List;
 public class AbstractDao<T> implements Dao<T> {
 
     protected Class<T> entityClass;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -59,7 +60,7 @@ public class AbstractDao<T> implements Dao<T> {
         entityManager.remove(entity);
     }
 
-    public EntityManager getEntityManager() {
+    protected EntityManager getEntityManager() {
         return entityManager;
     }
 

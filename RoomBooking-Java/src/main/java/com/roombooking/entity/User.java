@@ -2,6 +2,7 @@ package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -15,7 +16,11 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 @NamedQueries({
         @NamedQuery(name = "User.findUserByLoginPassword", query =
-                "SELECT user FROM User user WHERE user.login=:login AND user.password=:password")
+                "SELECT user FROM User user WHERE user.login=:login AND user.password=:password"),
+
+        @NamedQuery(name = "User.findUserByLogin", query =
+                "SELECT user FROM User user WHERE user.login=:login"),
+
 })
 public class User {
 
@@ -48,8 +53,8 @@ public class User {
         this.secondName = secondName;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -69,19 +74,20 @@ public class User {
         this.login = login;
     }
 
-    @JsonIgnore
     @Basic
+    @JsonIgnore
     @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 32)
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
 
     @Basic
-    @Column(name = "email", nullable = true, insertable = true, updatable = true, length = 60)
+    @Column(name = "email", nullable = false, insertable = true, updatable = true, length = 60)
     public String getEmail() {
         return email;
     }
@@ -91,7 +97,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "first_name", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "first_name", nullable = false, insertable = true, updatable = true, length = 45)
     public String getFirstName() {
         return firstName;
     }
@@ -101,7 +107,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "second_name", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "second_name", nullable = false, insertable = true, updatable = true, length = 45)
     public String getSecondName() {
         return secondName;
     }
@@ -167,4 +173,11 @@ public class User {
         this.position = positionByPosition;
     }
 
+    public void setFields(User user){
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+    }
 }

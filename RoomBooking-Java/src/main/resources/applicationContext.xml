@@ -11,11 +11,14 @@
     <context:component-scan base-package="com.roombooking"/>
     <context:property-placeholder location="classpath:database.properties"/>
     <!--Beans-->
-    <bean id="userDao" class="com.roombooking.dao.user.UserJPADao" scope="prototype"/>
-    <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao" scope="prototype"/>
-    <bean id="timetableDao" class="com.roombooking.dao.timetable.TimetableJPADao" scope="prototype"/>
-    <bean id="bookingleDao" class="com.roombooking.dao.booking.BookingJPADao" scope="prototype"/>
-    <bean id="roomtypeleDao" class="com.roombooking.dao.roomtype.RoomTypeJPADao" scope="prototype"/>
+    <bean id="userDao" class="com.roombooking.dao.user.UserJPADao"/>
+    <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao"/>
+    <bean id="timetableDao" class="com.roombooking.dao.timetable.TimetableJPADao"/>
+    <bean id="bookingDao" class="com.roombooking.dao.booking.BookingJPADao"/>
+    <bean id="roomtypeDao" class="com.roombooking.dao.roomtype.RoomTypeJPADao"/>
+    <bean id="rightsDao" class="com.roombooking.dao.rights.RightsJPADao"/>
+    <bean id="roleDao" class="com.roombooking.dao.role.RoleJPADao"/>
+    <bean id="positionDao" class="com.roombooking.dao.position.PositionJPADao"/>
 
     <bean id="roomService" class="com.roombooking.service.RoomService"/>
     <bean id="userService" class="com.roombooking.service.UserService"/>
@@ -47,15 +50,15 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.format_sql">false</prop>
                 <prop key="use_sql_comments">false</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
-                <prop key="hibernate.connection.charSet">UTF-8</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+
             </props>
         </property>
     </bean>

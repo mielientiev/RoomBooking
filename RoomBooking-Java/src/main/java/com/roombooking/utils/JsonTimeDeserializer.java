@@ -14,7 +14,7 @@ public class JsonTimeDeserializer extends JsonDeserializer<Time> {
         try {
             return Time.valueOf(jsonparser.getText() + ":00");
         } catch (IllegalArgumentException e) {
-            return null;
+            return new Time(-1);
         }
     }
 

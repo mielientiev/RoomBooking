@@ -14,7 +14,7 @@ public class JsonDateDeserializer extends JsonDeserializer<Date> {
         try {
             return Date.valueOf(jsonparser.getText());
         } catch (IllegalArgumentException e) {
-            return null;
+            return new Date(-1);
         }
 
     }

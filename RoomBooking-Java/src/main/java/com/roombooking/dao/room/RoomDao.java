@@ -17,4 +17,7 @@ public interface RoomDao extends Dao<Room> {
 
     List<Room> getAllFreeRoomsByDateAndTimetableId(int userId, Date date, int timetableId);
 
+    List<Room> getAllFreeRoomsByDate(int userId, Date date);
+
+    Room findByRoomName(String roomName);
 }

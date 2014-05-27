@@ -40,6 +40,18 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
                         "WHERE rights.position.id = u.position.id AND u.id =:usid AND r.id NOT IN " +
                         "(SELECT r2.id FROM Room r2 LEFT JOIN r2.bookings as book " +
                         "WHERE book.date =:date AND book.timetable.id =:timetableId)"),
+
+        @NamedQuery(name = "Room.findAllFreeRoomsByDate", query =
+                "SELECT r FROM  Room r, User u " +
+                        "INNER JOIN fetch r.roomType as rtype " +
+                        "INNER JOIN fetch rtype.rights as rights " +
+                        "WHERE rights.position.id = u.position.id AND u.id =:usid AND r.id NOT IN " +
+                        "(SELECT r2.id FROM Room r2 LEFT JOIN r2.bookings as book " +
+                        "WHERE book.date =:date " +
+                        "GROUP BY r2.id " +
+                        "HAVING COUNT(DISTINCT book.timetable.id) = (SELECT COUNT(timetable.id) FROM Timetable as " +"timetable))"),
+
+        @NamedQuery(name = "Room.findRoomByName",query = "SELECT r FROM Room r WHERE r.roomName=:roomName")
 })
 
 public class Room {
@@ -52,7 +64,7 @@ public class Room {
 
     private int places;
 
-    private Integer computers;
+    private int computers;
 
     private Boolean board;
 
@@ -105,11 +117,11 @@ public class Room {
 
     @Basic
     @Column(name = "computers", nullable = true, insertable = true, updatable = true)
-    public Integer getComputers() {
+    public int getComputers() {
         return computers;
     }
 
-    public void setComputers(Integer computers) {
+    public void setComputers(int computers) {
         this.computers = computers;
     }
 
@@ -139,7 +151,7 @@ public class Room {
         result = 31 * result + roomName.hashCode();
         result = 31 * result + floor;
         result = 31 * result + places;
-        result = 31 * result + computers.hashCode();
+        result = 31 * result + computers;
         result = 31 * result + board.hashCode();
         result = 31 * result + projector.hashCode();
         result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
@@ -156,8 +168,8 @@ public class Room {
         if (floor != room.floor) return false;
         if (id != room.id) return false;
         if (places != room.places) return false;
+        if (computers != room.computers) return false;
         if (!board.equals(room.board)) return false;
-        if (!computers.equals(room.computers)) return false;
         if (!projector.equals(room.projector)) return false;
         if (!roomName.equals(room.roomName)) return false;
         if (roomType != null ? !roomType.equals(room.roomType) : room.roomType != null) return false;
@@ -184,4 +196,12 @@ public class Room {
         this.roomType = roomTypeByType;
     }
 
+    public void setFields(Room room) {
+        this.roomName = room.getRoomName();
+        this.places = room.getPlaces();
+        this.board = room.getBoard();
+        this.computers = room.getComputers();
+        this.floor = room.getFloor();
+        this.projector = room.getProjector();
+    }
 }

@@ -140,4 +140,60 @@ public class RoomResource {
         return rooms;
     }
 
+    @GET
+    @JsonView({Room.class})
+    @Path("/rooms/{date}")
+    @RolesAllowed({"Admin", "User"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Room> getAllFreeRoomsByDateAndTimetable(@PathParam("date") String date,
+                                                        @Context HttpServletRequest servletRequest) {
+
+        User user = (User) servletRequest.getAttribute("CurrentUser");
+        List<Room> rooms = roomService.getAllFreeRoomsByDate(user.getId(), date);
+        if (rooms.isEmpty()) {
+            logger.debug("Rooms Not Found");
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        logger.debug("Rooms Found");
+        return rooms;
+    }
+
+    @PUT
+    @Path("/room")
+    @RolesAllowed({"Admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addRoom(Room room) {
+        if (!isRoomValid(room)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        Room addedRoom = roomService.addNewRoom(room);
+        return Response.ok().entity(addedRoom).build();
+    }
+
+    private boolean isRoomValid(Room room) {
+        return !(room == null || room.getRoomType() == null || room.getRoomName() == null);
+    }
+
+    @DELETE
+    @Path("/room/{id}")
+    @RolesAllowed({"Admin"})
+    public Response deleteRoom(@PathParam("id") int id) {
+        roomService.deleteRoomById(id);
+        return Response.noContent().build();
+    }
+
+    @POST
+    @Path("/room/{id}")
+    @RolesAllowed({"Admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response editRoom(@PathParam("id") int id, Room room) {
+        if (!isRoomValid(room)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        Room editedRoom = roomService.editRoom(id, room);
+        return Response.ok().entity(editedRoom).build();
+    }
 }

@@ -29,8 +29,8 @@ INSERT INTO User (id, login, password, email, first_name, second_name, position,
 (3, 'evgesha', '1234', 'evgen@mail.ru', 'Zhenya', 'Melnik', 1, 1),
 (5, 'dimasik', '1234', 'dimasik@mail.ru', 'dimasik', 'dimasik', 3, 1),
 (6, 'ads', '123', 'asd', 'sdf', 'asdf', 3, 1),
-(7, 'w', 'w', 'w', 'w', 'w', 1, 1),
-(8, 's', 's', 'ss', 's', 's', 3, 1);
+(7, 'ww', 'w', 'w', 'w', 'w', 1, 1),
+(8, 'ss', 's', 'ss', 's', 's', 3, 1);
 
 
 INSERT INTO Room (id, room_name, floor, places, computers, board, projector, type) VALUES
