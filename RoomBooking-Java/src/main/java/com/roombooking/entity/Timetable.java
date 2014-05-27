@@ -20,7 +20,12 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @NamedQueries({
         @NamedQuery(name = "Timetable.findTimetableByRoomIdAndDate", query =
                 "SELECT timetable FROM Timetable timetable, Booking b " +
-                        "WHERE b.timetable.id = timetable.id AND b.date =:date AND b.room.id=:roomId")
+                        "WHERE b.timetable.id = timetable.id AND b.date =:date AND b.room.id=:roomId"),
+
+        @NamedQuery(name = "Timetable.findTimetableByTime", query =
+                "SELECT timetable FROM Timetable timetable " +
+                        "WHERE (:start BETWEEN timetable.start AND timetable.end) " +
+                        "OR (:end BETWEEN timetable.start AND timetable.end)")
 })
 public class Timetable {
 
@@ -96,6 +101,11 @@ public class Timetable {
 
     public void setBookings(List<Booking> bookingsById) {
         this.bookings = bookingsById;
+    }
+
+    public void setFields(Timetable timetable) {
+        this.start = timetable.getStart();
+        this.end = timetable.getEnd();
     }
 
 }

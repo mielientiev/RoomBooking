@@ -66,5 +66,42 @@ public class TimetableResource {
         return timetable;
     }
 
+    @PUT
+    @RolesAllowed({"Admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addTimetable(Timetable timetable) {
+        if (!isValidTimetable(timetable)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        Timetable addedTimetable = timetableService.addNewTimetable(timetable);
+        return Response.ok().entity(addedTimetable).build();
+    }
+
+    private boolean isValidTimetable(Timetable timetable) {
+        return !(timetable == null || timetable.getStart() == null || timetable.getEnd() == null ||
+                timetable.getStart().after(timetable.getEnd()));
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @RolesAllowed({"Admin"})
+    public Response deleteTimetable(@PathParam("id") int id) {
+        timetableService.deleteTimetableById(id);
+        return Response.noContent().build();
+    }
+
+
+    @POST
+    @Path("/{id}")
+    @RolesAllowed({"Admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Timetable editTimetable(@PathParam("id") int id, Timetable timetable) {
+        if (!isValidTimetable(timetable)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return timetableService.editTimetable(id, timetable);
+    }
 
 }

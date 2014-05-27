@@ -82,8 +82,8 @@ public class UserService {
     public User editUser(int id, User user) {
         User editedUser = userDao.findById(id);
         if (editedUser == null) {
-            logger.debug("User with this login: {} exists", user.getLogin());
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            logger.debug("User with this login doesn't {} exists", user.getLogin());
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
         fillUserInfo(editedUser, user);
