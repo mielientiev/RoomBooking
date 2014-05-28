@@ -13,6 +13,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+import static com.roombooking.auth.Roles.ADMIN;
+import static com.roombooking.auth.Roles.USER;
+
 @Component
 @Path("/timetable")
 public class TimetableResource {
@@ -24,7 +27,7 @@ public class TimetableResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Timetable getTimetableById(@PathParam("id") int id) {
         logger.debug("Get timetable #{}", id);
@@ -38,7 +41,7 @@ public class TimetableResource {
     }
 
     @GET
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Timetable> getTimetable() {
         logger.debug("Get timetable");
@@ -53,7 +56,7 @@ public class TimetableResource {
 
     @GET
     @Path("/room-{id}/{date}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Timetable> getTimetableByRoomAndDate(@PathParam("id") int id, @PathParam("date") String date) {
         logger.debug("Get timetable by room #{} on {}", id, date);
@@ -67,7 +70,7 @@ public class TimetableResource {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTimetable(Timetable timetable) {
@@ -86,7 +89,7 @@ public class TimetableResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     public Response deleteTimetable(@PathParam("id") int id) {
         timetableService.deleteTimetableById(id);
         return Response.noContent().build();
@@ -95,7 +98,7 @@ public class TimetableResource {
 
     @POST
     @Path("/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     public Timetable editTimetable(@PathParam("id") int id, Timetable timetable) {
         if (!isValidTimetable(timetable)) {

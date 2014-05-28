@@ -18,6 +18,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+import static com.roombooking.auth.Roles.ADMIN;
+import static com.roombooking.auth.Roles.USER;
+
 @Component
 @Path("/room-service")
 public class RoomResource {
@@ -30,7 +33,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/room/{id}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public Room getRoomById(@PathParam("id") int id, @Context HttpServletRequest servletRequest) {
         logger.debug("Get room by id = {}", id);
@@ -47,7 +50,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/rooms")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getAllRooms(@Context HttpServletRequest servletRequest) {
         logger.debug("Get all rooms");
@@ -64,7 +67,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/types")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<RoomType> getAllRoomType() {
         logger.debug("Get all room types");
@@ -80,7 +83,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/type/{roomType}/places/{places}/board/{board}/computers/{computers}/projector/{projector}/name/{roomName}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getFilterRooms(@PathParam("roomType") int roomType, @PathParam("places") int places,
                                      @PathParam("board") boolean board, @PathParam("computers") int computers,
@@ -102,7 +105,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/type/{roomType}/places/{places}/board/{board}/computers/{computers}/projector/{projector}/name/")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getFilterRoomsWithEmptyName(@PathParam("roomType") int roomType, @PathParam("places") int places,
                                                   @PathParam("board") boolean board, @PathParam("computers") int computers,
@@ -124,7 +127,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/rooms/{date}/{timetableId}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getAllFreeRoomsByDateAndTimetable(@PathParam("date") String date,
                                                         @PathParam("timetableId") int timetableId,
@@ -143,7 +146,7 @@ public class RoomResource {
     @GET
     @JsonView({Room.class})
     @Path("/rooms/{date}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> getAllFreeRoomsByDateAndTimetable(@PathParam("date") String date,
                                                         @Context HttpServletRequest servletRequest) {
@@ -160,7 +163,7 @@ public class RoomResource {
 
     @PUT
     @Path("/room")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addRoom(Room room) {
@@ -177,7 +180,7 @@ public class RoomResource {
 
     @DELETE
     @Path("/room/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     public Response deleteRoom(@PathParam("id") int id) {
         roomService.deleteRoomById(id);
         return Response.noContent().build();
@@ -185,7 +188,7 @@ public class RoomResource {
 
     @POST
     @Path("/room/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editRoom(@PathParam("id") int id, Room room) {

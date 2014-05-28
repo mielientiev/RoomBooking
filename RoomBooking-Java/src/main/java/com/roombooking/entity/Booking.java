@@ -15,22 +15,22 @@ import java.sql.Date;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NamedQueries({
         @NamedQuery(name = "Booking.findAllBookingsByUserId", query =
-                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId ORDER BY booking.date, booking.timetable.id"),
+                "SELECT booking FROM Booking booking WHERE booking.user.id=:userId ORDER BY booking.date DESC, booking.timetable.id ASC"),
 
         @NamedQuery(name = "Booking.findAllAvailableBookingsByUserId", query =
                 "SELECT booking FROM Booking booking " +
                         "WHERE booking.user.id=:userId AND (booking.date>:date OR (booking.date=:date AND booking.timetable.start>=:time)) " +
-                        "ORDER BY booking.date, booking.timetable.id"),
+                        "ORDER BY booking.date DESC, booking.timetable.id ASC"),
 
         @NamedQuery(name = "Booking.findBookingsByRoomIdAndDate", query =
                 "SELECT b FROM Timetable timetable, Booking b " +
                         "WHERE b.timetable.id = timetable.id AND b.room.id =:roomId AND b.date =:date " +
-                        "ORDER BY b.date, b.timetable.id"),
+                        "ORDER BY b.date DESC, b.timetable.id ASC"),
 
         @NamedQuery(name = "Booking.findBookingByRoomIdDateAndTimetableId", query =
                 "SELECT b FROM Booking b " +
                         "WHERE b.timetable.id =:timeId AND b.room.id =:roomId AND b.date =:date " +
-                        "ORDER BY b.date, b.timetable.id"),
+                        "ORDER BY b.date DESC, b.timetable.id ASC"),
 
         @NamedQuery(name = "Booking.filterBookingByDate", query =
                 "SELECT b FROM Booking b " +

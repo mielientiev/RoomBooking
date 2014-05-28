@@ -67,6 +67,7 @@ public class RoomJPADao extends AbstractDao<Room> implements RoomDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Room findByRoomName(String roomName) {
         TypedQuery<Room> query = getEntityManager().createNamedQuery("Room.findRoomByName", entityClass);
         query.setParameter("roomName", roomName);

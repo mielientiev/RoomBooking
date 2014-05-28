@@ -33,14 +33,14 @@ public class BookingServiceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetBookingByRoomIdAndWrongDate()  {
-        bookingService.getBookingByRoomIdAndDate(1,"2014-00-00");
+        bookingService.getBookingsByRoomIdAndDate(1, "2014-00-00");
     }
 
     @Test
     public void testGetBookingByRoomIdAndRightDate() {
         List<Booking> list = Arrays.asList(mock(Booking.class));
         when(bookingService.bookingDao.getBookingsByRoomIdAndDate(1, Date.valueOf("2014-05-05"))).thenReturn(list);
-        bookingService.getBookingByRoomIdAndDate(1, "2014-05-05");
+        bookingService.getBookingsByRoomIdAndDate(1, "2014-05-05");
         verify(bookingService.bookingDao).getBookingsByRoomIdAndDate(1, Date.valueOf("2014-05-05"));
     }
 

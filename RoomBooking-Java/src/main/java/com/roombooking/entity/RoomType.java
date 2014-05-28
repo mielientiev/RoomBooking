@@ -11,6 +11,10 @@ import java.util.Set;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "RoomType.findRoomTypeByRoomTypeName", query =
+                "SELECT roomType FROM RoomType roomType WHERE roomType.roomType =:roomName")
+})
 public class RoomType {
 
     private int id;
@@ -80,4 +84,7 @@ public class RoomType {
         this.rooms = roomsById;
     }
 
+    public void setFields(RoomType roomType) {
+        this.roomType = roomType.roomType;
+    }
 }

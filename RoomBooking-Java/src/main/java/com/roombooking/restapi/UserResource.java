@@ -15,6 +15,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+import static com.roombooking.auth.Roles.ADMIN;
+import static com.roombooking.auth.Roles.USER;
+
 @Component
 @Path("/user-service")
 public class UserResource {
@@ -26,7 +29,7 @@ public class UserResource {
 
     @GET
     @Path("/user/{id}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public User getUserById(@PathParam("id") int id) {
         logger.debug("Get user by id = " + id);
@@ -41,7 +44,7 @@ public class UserResource {
 
     @GET
     @Path("/user")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public User getCurrentUser(@Context HttpServletRequest servletRequest) {
         logger.debug("Get current user");
@@ -57,7 +60,7 @@ public class UserResource {
 
     @GET
     @Path("/users")
-    @RolesAllowed("Admin")
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getAllUsers() {
         logger.debug("Get All Users ");
@@ -72,7 +75,7 @@ public class UserResource {
 
     @PUT
     @Path("/user")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User user) {
@@ -91,7 +94,7 @@ public class UserResource {
 
     @DELETE
     @Path("/user/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     public Response deleteUser(@PathParam("id") int id) {
         userService.deleteUserById(id);
         return Response.noContent().build();
@@ -99,7 +102,7 @@ public class UserResource {
 
     @POST
     @Path("/user/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editUser(@PathParam("id") int id, User user) {

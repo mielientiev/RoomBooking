@@ -20,10 +20,14 @@
     <bean id="roleDao" class="com.roombooking.dao.role.RoleJPADao"/>
     <bean id="positionDao" class="com.roombooking.dao.position.PositionJPADao"/>
 
+    <bean id="bookingFactory" class="com.roombooking.service.BookingFactoryImpl"/>
+
     <bean id="roomService" class="com.roombooking.service.RoomService"/>
     <bean id="userService" class="com.roombooking.service.UserService"/>
     <bean id="timetableService" class="com.roombooking.service.TimetableService"/>
     <bean id="bookingService" class="com.roombooking.service.BookingService"/>
+    <bean id="adminBookingService" class="com.roombooking.service.AdminBookingService" parent="bookingService"/>
+    <bean id="roomTypeService" class="com.roombooking.service.RoomTypeService"/>
 
     <!--Beans-->
 

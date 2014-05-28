@@ -42,7 +42,7 @@ public class BookingService {
         return bookings.isEmpty() ? null : bookings;
     }
 
-    public List<Booking> getBookingByRoomIdAndDate(int id, String date) {
+    public List<Booking> getBookingsByRoomIdAndDate(int id, String date) {
         Date convertedDate;
         try {
             convertedDate = Date.valueOf(date);
@@ -104,7 +104,7 @@ public class BookingService {
         return date.compareTo(now) >= 0 && !(date.compareTo(now) == 0 && currentTime.after(timeOfLectureStart));
     }
 
-    public void deleteUserBooking(int bookingId, User user) {
+    public void deleteBooking(int bookingId, User user) {
         Booking booking = bookingDao.findById(bookingId);
         if (booking == null) {
             logger.debug("Booking with bookingId#{} doesn't exist", bookingId);
@@ -139,4 +139,5 @@ public class BookingService {
 
         return bookingDao.filterUserBookingsByDate(userId, fromDate, toDate);
     }
+
 }
