@@ -1,0 +1,19 @@
+<a class="roomlist-item">
+<table class = "table booking-card-table">
+<h2 class="h2"><%= room['roomName'] %></h2>
+<tr>
+	<td>Date :</td>
+	<td><%= date %></td>
+</tr>
+<tr>
+	<td>Pair :</td>
+	<td><%= timetable['id'] %></td>
+</tr>
+<tr>
+	<td>Time :</td>
+	<td><%= timetable['start'] %> - <%= timetable['end'] %></td>
+</tr>
+<tr><td></td><td></td></tr>
+<table>
+<button type="button" class="btn btn-default btn-delete-booking" id="<%= id %>">Cancel booking</button>
+</a>

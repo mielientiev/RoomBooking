@@ -1,120 +1,41 @@
-.pagination {
-  height: 36px;
-  margin: 18px 0;
+#navbar-main {
+  height: 30px;
+  padding-right: 100px;
+  padding-left: 100px;
 }
 
-.pagination ul {
-  display: inline-block;
-  *display: inline;
-  margin-bottom: 0;
-  margin-left: 0;
-  -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-          border-radius: 3px;
-  *zoom: 1;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+.navbar-links {
+  margin-left: 120px;
 }
-
-.pagination li {
-  display: inline;
-}
-
-.pagination a {
-  float: left;
-  padding: 0 14px;
-  line-height: 34px;
-  text-decoration: none;
-  border: 1px solid #ddd;
-  border-left-width: 0;
-}
-
-.pagination a:hover,
-.pagination .active a {
-  background-color: #f5f5f5;
-}
-
-.pagination .active a {
-  color: #999999;
-  cursor: default;
-}
-
-.pagination .disabled span,
-.pagination .disabled a,
-.pagination .disabled a:hover {
-  color: #999999;
-  cursor: default;
-  background-color: transparent;
-}
-
-.pagination li:first-child a {
-  border-left-width: 1px;
-  -webkit-border-radius: 3px 0 0 3px;
-     -moz-border-radius: 3px 0 0 3px;
-          border-radius: 3px 0 0 3px;
-}
-
-.pagination li:last-child a {
-  -webkit-border-radius: 0 3px 3px 0;
-     -moz-border-radius: 0 3px 3px 0;
-          border-radius: 0 3px 3px 0;
-}
-
-.pagination-centered {
-  text-align: center;
-}
-
-.thumbnails {
-  margin-left: -20px;
-  list-style: none;
-  *zoom: 1;
-}
-
-.thumbnails:before,
-.thumbnails:after {
-  display: table;
-  content: "";
-}
-
-.thumbnails:after {
-  clear: both;
-}
-
-.row-fluid .thumbnails {
-  margin-left: 0;
-}
-
-.thumbnails > li {
-  float: left;
-  margin-bottom: 18px;
-  margin-left: 20px;
-}
-
-
-/*custom section*/
 
 #content {
-<<<<<<< HEAD
-
+  
+  margin-top: 60px;
 	width: 95%;
-=======
-	width: 90%;
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
   display: block;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
 
-<<<<<<< HEAD
 h1,
 h2 .h2 {
-=======
-h2,
-.h2 {
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
 	margin-top: 5px;
 	padding-left: 10%;
+}
+
+.h2 {
+  margin-top: 5px;
+  padding-left: 10%;
+}
+
+.bookinglist {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  width: 280px;
 }
 
 .roomlist {
@@ -148,6 +69,19 @@ h2,
   width: 50%;
 }
 
+.booking-card-table {
+  width: 100%;
+}
+
+#loading-div {
+  padding-left: 50%;
+  padding-top: 15%;
+}
+
+.disabled{
+  display: none;
+}
+
 .room-details-table {
   white-space:nowrap;
   width: 70%;
@@ -162,16 +96,12 @@ h2,
 }
 
 .datepicker-table {
-  width: 70%;
-  margin: 20px;
-}
-
-.datepicker-table td{
-  width: auto;
+  padding: 0 0 0 0;
+  width: 100px;
 }
 
 .myform {
-  width: 80%;
+  width: 50%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -187,89 +117,245 @@ h2,
 
 .btn-pair {
   border: 1px solid #ffffff;
-<<<<<<< HEAD
   border-radius: 2px;
   padding: 5.5px;
-=======
-  padding: 4px;
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
   vertical-align: center;
 }
 
 .btn-group-pair {
-<<<<<<< HEAD
-  border: 2px solid #dddddd;
+  margin-top: 6px;
   margin-left: 20px;
   height: 100%;
   width: 100%;
-  width: 400px;border-radius: 2px;
+  width: 300px;
+  border-radius: 2px;
 }
 
 .submit-booking {
+  text-align: center;
   padding: 20px;
 }
 
 #submit-booking-btn {
-  margin-left: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 60px;
+  padding-right: 60px;
 }
 
 #booking-div {
   margin-bottom: 30px;
 }
 
-.filter-input {
-  width: 75px;
-  padding: 3px;
+#list-container {
+  margin-left: 220px;
+}
+
+.alert-fail-filter {
+  position: absolute;
+  background: #222222;
+  width: 40%;
+  margin-left: 32%;
+  margin-top: 12%;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.login-div {
+  padding: 20px 20px 20px 20px;
+  margin-top: 5%;
+  width: 100%;
+  margin-left: 10%;
+}
+
+#login-row {
+  height: 300px;
+}
+
+#login-table {  width: 80%;
+}
+
+#login-col {
+  padding-left: 2%;
+}
+
+#description-col {
+  padding-right: 2%;
+  width: 50%;
+  border-right: 1px solid #cccccc;
+}
+
+.btn-login {
+  float: right;
+}
+
+.login-input {
+  margin-left: 5%;
+  width: 95%;
+}
+
+.login-fail {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.btn-booking-room {
   margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 30px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.btn-delete-booking {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+#datepicker-div {
+  color: #222222;
+}
+
+div.small-datepicker{
+  margin-top: 5px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+.fixed-left {
+  color: #ffffff;
+  position: fixed;
+  height: 75%;
+  width: 230px;
+  margin-left: 0px;
+  padding-left: 8px;
+  background-color: #222222;
+  overflow-y: scroll;
+}
+
+.fixed-left-low {
+  border-top: 2px solid #ffffff;
+  color: #ffffff;
+  position: fixed;
+  height: 10%;
+  width: 230px;
+  bottom: 5%;
+  margin-left: 0px;
+  padding-left: 8px;
+  background-color: #222222;
+}
+::-webkit-scrollbar {
+      width: 12px;
+}
+::-webkit-scrollbar-track {
+      background-color: #111111;
+} /* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-thumb {
+      background-color: #444444;
+      border-radius: 12px;
+}
+::-webkit-scrollbar-thumb:hover {
+      background-color: #666666;
+} /* this will style the thumb, ignoring the track */
+
+.non-bold {
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.filter-input {
+  height: 30px;
+  width: 80%;
+  margin-left: 15px;
+  margin-bottom: 7px;
+  margin-top: 3px;
+  padding-left: 2px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.filter-checkbox-div {
+  margin-top: 12px;
 }
 
 .filter-checkbox {
-  color: #ffffff;
-  margin: 13px;
+  margin-left: 12px;
+}
+
+.date-checkbox-div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#filter-header {
+  margin-top: 20px;
+}
+
+.pair-select {
+  height: 30px;
+  color: #000000;
+  width: 80%;
+  margin-left: 15px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+};
+
+.btn-search-div {
+  text-align: center;
+}
+
+#search {
+  top: 0; left: 0; bottom: 0; right: 0;
+  margin-top: 10px;
   margin-left: 30px;
+  padding-top: 2px;
+  width: 70%;
+  height: 30px;
 }
 
-.btn-filter {
-  padding: 4px;
-  margin: 4px;
+.disabled-select {
+  color: #888888;
 }
 
-.filter-button {
-  margin: 5px;
-  margin-left: 40px;
+div.hr {
+background: #ffffff  no-repeat scroll center;
+margin-left: 0px;
+margin-top: 15px;
+margin-right: 0px;
+width:90%;
+height: 1px;
 }
 
-.filter-dropdown {
-  width: 200px;
+div.hr hr {
+display: none;
 }
 
-.filter-dropdown-small {
-  width: 150px;
+.alert-success-operation {
+    position: fixed;
+  background: #3fb618;
+  width: 40%;
+  margin-left: 32%;
+  margin-top: 12%;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
-.filter-label {
-  color: #ffffff;
-  float: left;
-  padding: 14.5px 15px;
-  padding-right: 0px;
-  font-size: 14px;
-  line-height: 21px;
-  height: 50px;
-}
-
-.filter-label:hover,
-.filter-label:focus {
-  text-decoration: none;
-}
-
-.my-option:hover {
-  cursor: pointer;
-=======
-  margin-left: 20px;
-  height: 100%;
-  width: 100%;
-  width: 400px;
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
+.alert-fail-operation {
+    position: fixed;
+  background: #222222;
+  width: 40%;
+  margin-left: 32%;
+  margin-top: 12%;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }

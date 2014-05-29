@@ -3,38 +3,32 @@ define([], function() {
 
         className: "pagination pagination-center",
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
         initialize:function (attrs) {
             this.options = attrs;
-            this.model.bind("reset", this.render, this);
-            this.render();
         },
 
         render:function () {
-<<<<<<< HEAD
+            $(this.el).empty();
             $(this.el).attr('id', 'pagination-div');
-=======
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
+            var that = this;
 
             var items = this.model.models;
             var len = items.length;
-            var pageCount = Math.ceil(len / 8);
+            var pageCount = Math.ceil(len / 12);
 
             $(this.el).html('<ul />');
 
-<<<<<<< HEAD
-
-            //TODO:
-            //!!!
-            //onclick do not render the whole page, just refresh the list
-
-=======
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
-            for (var i=0; i < pageCount; i++) {
-                $('ul', this.el).append("<li" + ((i + 1) === this.options.page ? " class='active'" : "") + "><a href='#rooms/page/"+(i+1)+"'>" + (i+1) + "</a></li>");
+            for (var i = 0; i < pageCount; i++) {
+                var e = $("<li><button>" + (i + 1) + "</button></li>");
+                $('button', e).attr('id', 'page' + (i + 1));
+                $('button', e).attr('value', (i + 1));
+                $('button', e).addClass('btn btn-default')
+                $('button', e).attr('disabled', (i + 1) == that.options.page);
+                $('button', e).click(function(event) {
+                    that.options.parent.changePage(event.target.value);
+                })
+                $('ul', this.el).append(e);
             }
 
             return this;

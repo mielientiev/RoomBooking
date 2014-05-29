@@ -1,15 +1,17 @@
 require.config({
   paths: {
-    jQuery: '/js/libs/jquery',
-    Underscore: '/js/libs/underscore',
-    Backbone: '/js/libs/backbone',
-    text: '/js/libs/text',
+    jQuery: 'libs/jquery-jquery.cookie',
+    Underscore: 'libs/underscore',
+    Backbone: 'libs/backbone',
+    datepicker: 'libs/jquery-ui',
+    text: 'libs/text',
     templates: '../templates'
   },
 
   shim: {
     'Backbone': ['Underscore', 'jQuery'],
-    'RoomBooking': ['Backbone']
+    'RoomBooking': ['Backbone'],
+    'datepicker' : ['jQuery']
   }
 });
 

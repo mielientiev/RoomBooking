@@ -1,60 +1,121 @@
 define(
-    ['views/RoomListView', 'views/RoomListItemView', 'views/roomdetails', 'models/Room', 'models/RoomCollection'],
-    function(RoomListView, RoomListItemView, RoomView, Room, RoomCollection)
+    [
+        'views/LoginView',
+        'views/RoomListView',
+        'views/roomdetails',
+        'views/BookingListView',
+        'models/Room',
+        'models/RoomCollection',
+        'models/BookingCollection'
+    ],
+    function(
+        LoginView,
+        RoomListView,
+        RoomView,
+        BookingListView,
+        Room,
+        RoomCollection,
+        BookingCollection
+        )
     {
 
-  var Router = Backbone.Router.extend({
+        var Router = Backbone.Router.extend({
 
-        routes: {
-            ""                  : "list",
-            "rooms/page/:page"  : "list",
-            "rooms/:id"         : "roomDetails"
-        },
+            routes: {
+                "login"     : "login",
+                "logout"    : "logout",
+                ""          : "redirectRooms",
+                "rooms"     : "rooms",
+                "rooms/:id" : "roomDetails",
+                "bookings"  : "bookings"
+            },
 
-        initialize: function () {        
-        },
+            initialize: function () {
+            },
 
-        changeView: function(view) {
-            if ( null != this.currentView ) {
-                this.currentView.undelegateEvents();
+            changeView: function(view) {
+                if ( null != this.currentView ) {
+                    this.currentView.undelegateEvents();
+                }
+                this.currentView = view;
+                this.currentView.render();
+            },
+
+            redirectRooms: function() {
+                document.location = "#rooms";
+            },
+
+            login: function() {
+                var that = this;
+                var header = $.cookie('user');
+                $.ajax({
+                    url: "/api/user-service/user",
+                    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', header)},
+                    success: function() {
+                        window.history.back();
+                    },
+                    error: function() {
+                        that.changeView(new LoginView());
+                    }
+                });
+            },
+
+            logout: function() {
+                $.removeCookie('user');
+                document.location = "?#login";
+            },
+
+            rooms: function() {
+                var roomList = new RoomCollection();
+                var header = $.cookie('user');
+                roomList.fetch({
+                    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', header)},
+                    success: function() {
+                        $("#content").html(new RoomListView({model: roomList, page: 1}).el);
+                    },
+                    error: function(xhr, error) {
+                        if(error.status == 401) {
+                            document.location = "?#login";
+                        }
+                        else {
+                            $("#content").html(new RoomListView({model: roomList, page: 1}).el);
+                        }
+                    }
+                });
+            },
+
+            bookings: function() {
+                var bookingList = new BookingCollection();
+                var header = $.cookie('user');
+                bookingList.fetch({
+                    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', header)},
+                    success: function() {
+                        $("#content").html(new BookingListView({model: bookingList, page: 1}).el);
+                    },
+                    error: function(xhr, error) {
+                        if(error.status == 401) {
+                            document.location = "?#login";
+                        }
+                        else {
+                            $("#content").html(new BookingListView({model: bookingList, page: 1}).el);
+                        }
+                    }
+                });
+            },
+
+            roomDetails: function (id) {
+                var room = new Room({id: id});
+                var that = this;
+                var header = $.cookie('user');
+                room.fetch({
+                    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', header)},
+                    success: function() {
+                        that.changeView(new RoomView({model: room}));
+                    }
+                });
             }
-            this.currentView = view;
-            this.currentView.render();
-        },
 
-        list: function(page) {
+        });
 
-            var p = page ? parseInt(page, 10) : 1;
-<<<<<<< HEAD
-            var r = new Room();
-            var roomList = new RoomCollection();
-            
-            roomList.fetch({
-                beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'ZXZnZXNoYToxMjM0')},
-=======
-            var roomList = new RoomCollection();
-
-            roomList.fetch({
-                beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
->>>>>>> e47248977b26b53e6106a130b9d1d9b4385c81e1
-                success: function() {
-                    $("#content").html(new RoomListView({model: roomList, page: p}).el);
-                }
-            });
-        },
-
-        roomDetails: function (id) {
-            var room = new Room({id: id});
-            var that = this;
-            room.fetch({
-                beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bWVsaToxMjM0NQ')},
-                success: function() {
-                    that.changeView(new RoomView({model: room}));
-                }
-            });
-        }
-
+        return new Router();
     });
-
-  return new Router();
-});

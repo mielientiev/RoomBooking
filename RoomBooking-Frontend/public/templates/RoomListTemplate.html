@@ -1,53 +1,92 @@
-<div class="navbar navbar-default">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <span class="filter-label">Room name:</span>
-    <form class="navbar-form navbar-left">
-      <input type="text" class="filter-input" id="roomName" placeholder="Name">
+<script data-main='js/boot' type="text/javascript" src='/public/js/libs/jquery-ui.js'></script>
+
+<div id="fail-container">
+ </div>
+
+  <div class="fixed-left">
+  <h3 id="filter-header">Filters:</h3>
+    <s`n class="filter-name">
+      Room name:
+    </span>
+    <form>
+      <input class="form-control filter-input" type="text" id="roomName" placeholder="Name">
     </form>
-    <span class="filter-label">Capacity:</span>
-    <form class="navbar-form navbar-left">
-      <input type="number" class="filter-input" id="places" placeholder="Cap.">
+    <span class="filter-name">
+      Capacity:
+    </span>
+    <form>
+      <input class="form-control filter-input" type="number" id="places" placeholder="Capacity">
     </form>
+    <span class="filter-name">
+      Computers:
+    </span>
+    <form>
+      <input class="form-control filter-input" type="number" id="computers" placeholder="Computers">
     </form>
-    <span class="filter-label">Computers:</span>
-    <form class="navbar-form navbar-left">
-      <input type="number" class="filter-input" id="computers" placeholder="Comps">
-    </form>
-    <ul class="nav navbar-nav">
-    <li class="dropdown filter-dropdown">
-        <a href="#" class="dropdown-toggle" value="" data-toggle="dropdown" id="type">All types <b class="caret"></b></a>
-        <ul class="dropdown-menu" id="typeList">
-          <li><a class="my-option" id="all-types">All types</a></li>
-          <li class="divider"></li>
-        </ul>
-      </li>
-      <li class="dropdown filter-dropdown-small">
-        <a href="#" class="dropdown-toggle" id="avaliable" data-toggle="dropdown">Only avaliable<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a class="my-option" id="avail-only">Only avaliable</a></li>
-          <li><a class="my-option" id="all">All</a></li>
-        </ul>
-      </li>
-      <li><div class="filter-checkbox">
-      <input type="checkbox" id="board"> Board 
+    <span class="filter-name">
+      Room type:
+    </span>
+    <select class="pair-select" id="type-select">
+          <option value="0">All</option>
+    </select>
+
+<span class="filter-name">
+      Display:
+    </span>
+      <div class="radio filter-checkbox">
+          <label>
+            <input type="radio" name="display-all" id="display-all" value="1" checked="">
+            All
+          </label>
+        </div>
+        <div class="radio filter-checkbox">
+          <label>
+            <input type="radio" name="display-all" id="display-avaliable" value="0">
+            Only avaliable
+          </label>
+        </div>
+
+    <div class="filter-checkbox-div">
+    <span class="filter-name">
+      Facilities:
+    </span>
+    </div>
+      <span class="filter-checkbox">
+      <input class="filter-checkbox" type="checkbox" id="board"> Board
+      </span>
+      <span class="filter-checkbox">
+      <input type="checkbox" id="projector"> Projector
+      </span>      
+
+    <div class="hr"><hr /></div>
+
+    <div class="date-checkbox-div">
+    <span class="filter-checkbox date-checkbox">
+      <input type="checkbox" id="specific-time"> Specific time:
+      </span>
       </div>
-      </li>
-      <li><div class="filter-checkbox">
-      <input type="checkbox" id="projector"> Projector 
-      </div>
-      </li>
-      <li><div class="filter-button">
-      <button class="btn btn-success btn-filter" id="search">Search</button>
-      </div>
-      </li>
-      </ul>
-  </div>
+      <span class="filter-name">
+      Date:
+    </span>
+    <div class="small-datepicker" id="datepicker" disabled>
+    </div>
+    <span class="filter-name">
+      Pair:
+    </span>
+    <select class="pair-select disabled-select" id="pair-select" disabled>
+          <option value="">Any</option>
+    </select>
+</div>
+
+<div class="fixed-left-low">
+<div class="btn-search-div"> 
+    <button class="btn btn-success btn-search" id="search">Search</button>
+    </div>
+</div>
+
+<div id="loading-div">
+<img src="/public/styles/images/loading.GIF" />
 </div>
 <div id="list-container">
 	<ul class="thumbnails"></ul>
-</div>
+  </div>
