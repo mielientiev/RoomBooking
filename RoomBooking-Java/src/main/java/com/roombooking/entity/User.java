@@ -64,58 +64,6 @@ public class User {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "login", nullable = false, insertable = true, updatable = true, length = 16)
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    @Basic
-    @JsonIgnore
-    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 32)
-    public String getPassword() {
-        return password;
-    }
-
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
-    @Column(name = "email", nullable = false, insertable = true, updatable = true, length = 60)
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Basic
-    @Column(name = "first_name", nullable = false, insertable = true, updatable = true, length = 45)
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Basic
-    @Column(name = "second_name", nullable = false, insertable = true, updatable = true, length = 45)
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
     @Override
     public int hashCode() {
         int result = id;
@@ -173,11 +121,63 @@ public class User {
         this.position = positionByPosition;
     }
 
-    public void setFields(User user){
+    public void setFields(User user) {
         this.login = user.getLogin();
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.firstName = user.getFirstName();
         this.secondName = user.getSecondName();
+    }
+
+    @Basic
+    @Column(name = "login", nullable = false, insertable = true, updatable = true, length = 16)
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Basic
+    @JsonIgnore
+    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 32)
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "email", nullable = false, insertable = true, updatable = true, length = 60)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Basic
+    @Column(name = "first_name", nullable = false, insertable = true, updatable = true, length = 45)
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Basic
+    @Column(name = "second_name", nullable = false, insertable = true, updatable = true, length = 45)
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 }

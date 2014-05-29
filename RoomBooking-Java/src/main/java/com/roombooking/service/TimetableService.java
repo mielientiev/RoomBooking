@@ -13,7 +13,7 @@ import java.util.List;
 public class TimetableService {
 
     @Autowired
-    private TimetableDao timetableDao;
+    protected TimetableDao timetableDao;
 
     public Timetable getTimetable(int id) {
         return timetableDao.findById(id);
@@ -84,13 +84,14 @@ public class TimetableService {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
-        if (!isStartAndEndTimeSuitable(timetable.getStart(), timetable.getEnd(),searchedTimetable)) {
+        if (!isStartAndEndTimeSuitable(timetable.getStart(), timetable.getEnd(), searchedTimetable)) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
         searchedTimetable.setFields(timetable);
         return timetableDao.update(searchedTimetable);
     }
+
     /**
      * Checks if time range between start and end is suitable with existed values in database
      * Example:
@@ -109,9 +110,9 @@ public class TimetableService {
      * 4) Start: 13:51:00 End: 15:00:00
      * return true
      *
-     * @param start timetable start time
-     * @param end   timetable end time
-     * @param  excludedTimetable
+     * @param start             timetable start time
+     * @param end               timetable end time
+     * @param excludedTimetable
      * @return true if time range is correct
      */
     private boolean isStartAndEndTimeSuitable(Time start, Time end, Timetable excludedTimetable) {

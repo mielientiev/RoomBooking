@@ -67,7 +67,7 @@ public class BookingService {
         Room room = roomDao.getRoomByIdWithUserRights(roomId, user);
         if (room == null) {
             logger.debug("Room with bookingId#{} doesn't exist", roomId);
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
         if (!room.getRoomType().getRights().iterator().next().getCanBookRoom()) {

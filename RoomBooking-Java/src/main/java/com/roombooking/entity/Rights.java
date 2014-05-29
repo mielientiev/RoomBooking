@@ -12,6 +12,10 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Rights.findByPositionAndRoomType", query =
+                "SELECT r FROM Rights r WHERE r.position.id =:posId AND r.roomType.id =:roomTypeId")
+})
 public class Rights {
 
     private int id;

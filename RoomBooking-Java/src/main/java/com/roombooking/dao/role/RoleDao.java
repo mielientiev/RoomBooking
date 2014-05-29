@@ -5,4 +5,6 @@ import com.roombooking.entity.Role;
 
 public interface RoleDao extends Dao<Role> {
 
+    Role findRoleByTitle(String title);
+
 }

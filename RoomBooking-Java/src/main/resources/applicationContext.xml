@@ -28,6 +28,9 @@
     <bean id="bookingService" class="com.roombooking.service.BookingService"/>
     <bean id="adminBookingService" class="com.roombooking.service.AdminBookingService" parent="bookingService"/>
     <bean id="roomTypeService" class="com.roombooking.service.RoomTypeService"/>
+    <bean id="positionService" class="com.roombooking.service.PositionService"/>
+    <bean id="roleService" class="com.roombooking.service.RoleService"/>
+    <bean id="rightsService" class="com.roombooking.service.RightsService"/>
 
     <!--Beans-->
 

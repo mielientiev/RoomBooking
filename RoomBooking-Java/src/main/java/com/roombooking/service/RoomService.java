@@ -19,9 +19,9 @@ public class RoomService {
     private static final Logger logger = LoggerFactory.getLogger(RoomService.class);
 
     @Autowired
-    private RoomDao roomDao;
+    protected RoomDao roomDao;
     @Autowired
-    private RoomTypeDao roomTypeDao;
+    protected RoomTypeDao roomTypeDao;
 
     public Room getRoomByIdWithUserRights(int roomId, User user) {
         return roomDao.getRoomByIdWithUserRights(roomId, user);
@@ -76,7 +76,7 @@ public class RoomService {
         RoomType roomType = roomTypeDao.findById(room.getRoomType().getId());
         if (roomType == null) {
             logger.debug("RoomType with this id: {} doesnt exist", room.getRoomType().getId());
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         filledRoom.setFields(room);
         filledRoom.setRoomType(roomType);
@@ -90,7 +90,6 @@ public class RoomService {
         }
         roomDao.deleteById(id);
     }
-
 
     public Room editRoom(int id, Room room) {
         Room searchedRoom = roomDao.findById(id);

@@ -19,7 +19,7 @@ public class RoomTypeJPADao extends AbstractDao<RoomType> implements RoomTypeDao
         TypedQuery<RoomType> query = getEntityManager().createNamedQuery("RoomType.findRoomTypeByRoomTypeName", entityClass);
         query.setParameter("roomName", roomTypeName);
         List<RoomType> roomTypes = query.getResultList();
-        return roomTypes.isEmpty()? null: roomTypes.get(0);
+        return roomTypes.isEmpty() ? null : roomTypes.get(0);
     }
 
 }

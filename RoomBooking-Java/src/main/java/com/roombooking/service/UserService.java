@@ -20,13 +20,13 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    private UserDao userDao;
+    protected UserDao userDao;
 
     @Autowired
-    private RoleDao roleDao;
+    protected RoleDao roleDao;
 
     @Autowired
-    private PositionDao positionDao;
+    protected PositionDao positionDao;
 
     public User getUserById(int id) {
         return userDao.findById(id);
@@ -55,13 +55,13 @@ public class UserService {
         Role role = roleDao.findById(user.getRole().getId());
         if (role == null) {
             logger.debug("Role with this id: {} doesnt exist", user.getRole().getId());
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
         Position position = positionDao.findById(user.getPosition().getId());
         if (position == null) {
             logger.debug("Position with this id: {} doesnt exist", user.getPosition().getId());
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
         filledUser.setFields(user);

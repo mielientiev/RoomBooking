@@ -26,6 +26,7 @@ public class TimetableJPADao extends AbstractDao<Timetable> implements Timetable
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Timetable> findByTime(Time start, Time end) {
         TypedQuery<Timetable> query = getEntityManager().createNamedQuery("Timetable.findTimetableByTime", entityClass);
         query.setParameter("start", start);

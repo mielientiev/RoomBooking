@@ -22,7 +22,7 @@ import java.util.List;
 import static com.roombooking.auth.Roles.ADMIN;
 import static com.roombooking.auth.Roles.USER;
 
-// todo maybe it makes sense to replace BookingService it with BookingFactory
+// todo maybe it makes sense to replace BookingService with BookingFactory
 @Component
 @Path("/booking")
 public class BookingResource {

@@ -95,7 +95,6 @@ public class TimetableResource {
         return Response.noContent().build();
     }
 
-
     @POST
     @Path("/{id}")
     @RolesAllowed({ADMIN})

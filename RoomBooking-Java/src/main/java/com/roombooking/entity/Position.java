@@ -12,6 +12,10 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Position.findPositionByTitle", query =
+                "SELECT pos FROM Position pos WHERE pos.title=:title")
+})
 public class Position {
 
     private int id;
@@ -63,7 +67,6 @@ public class Position {
         return true;
     }
 
-
     @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     public List<Rights> getRights() {
         return rights;
@@ -82,4 +85,7 @@ public class Position {
         this.users = usersById;
     }
 
+    public void setFields(Position position) {
+        this.title = position.title;
+    }
 }

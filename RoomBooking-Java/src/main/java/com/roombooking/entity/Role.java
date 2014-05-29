@@ -15,6 +15,10 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Role.findRoleByTitle", query =
+                "SELECT role FROM Role role WHERE role.title=:title")
+})
 public class Role {
 
     private int id;
@@ -73,4 +77,7 @@ public class Role {
         this.users = usersById;
     }
 
+    public void setFields(Role role) {
+        this.title = role.title;
+    }
 }

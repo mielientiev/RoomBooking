@@ -11,7 +11,7 @@ import java.util.List;
 public class RoomTypeService {
 
     @Autowired
-    private RoomTypeDao roomTypeDao;
+    protected RoomTypeDao roomTypeDao;
 
     public List<RoomType> getAllRoomTypes() {
         return roomTypeDao.findAll();
@@ -43,8 +43,15 @@ public class RoomTypeService {
     public RoomType editRoomType(int id, RoomType roomType) {
         RoomType searchedRoomType = roomTypeDao.findById(id);
         if (searchedRoomType == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        if (!searchedRoomType.getRoomType().equals(roomType.getRoomType())
+                && roomTypeDao.findByRoomTypeName(roomType.getRoomType()) != null) {
+
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
         searchedRoomType.setFields(roomType);
         return roomTypeDao.update(searchedRoomType);
     }

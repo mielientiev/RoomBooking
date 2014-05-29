@@ -48,30 +48,6 @@ public class Timetable {
         this.id = id;
     }
 
-    @Basic
-    @JsonSerialize(using = JsonTimeSerializer.class)
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
-    @Column(name = "start", nullable = false, insertable = true, updatable = true)
-    public Time getStart() {
-        return start;
-    }
-
-    public void setStart(Time start) {
-        this.start = start;
-    }
-
-    @Basic
-    @JsonSerialize(using = JsonTimeSerializer.class)
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
-    @Column(name = "end", nullable = false, insertable = true, updatable = true)
-    public Time getEnd() {
-        return end;
-    }
-
-    public void setEnd(Time end) {
-        this.end = end;
-    }
-
     @Override
     public int hashCode() {
         int result = id;
@@ -106,6 +82,30 @@ public class Timetable {
     public void setFields(Timetable timetable) {
         this.start = timetable.getStart();
         this.end = timetable.getEnd();
+    }
+
+    @Basic
+    @JsonSerialize(using = JsonTimeSerializer.class)
+    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @Column(name = "start", nullable = false, insertable = true, updatable = true)
+    public Time getStart() {
+        return start;
+    }
+
+    public void setStart(Time start) {
+        this.start = start;
+    }
+
+    @Basic
+    @JsonSerialize(using = JsonTimeSerializer.class)
+    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @Column(name = "end", nullable = false, insertable = true, updatable = true)
+    public Time getEnd() {
+        return end;
+    }
+
+    public void setEnd(Time end) {
+        this.end = end;
     }
 
 }
