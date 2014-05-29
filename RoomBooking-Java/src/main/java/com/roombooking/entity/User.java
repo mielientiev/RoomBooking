@@ -2,6 +2,7 @@ package com.roombooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -15,18 +16,30 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 @NamedQueries({
         @NamedQuery(name = "User.findUserByLoginPassword", query =
-                "SELECT user FROM User user WHERE user.login=:login AND user.password=:password")
+                "SELECT user FROM User user WHERE user.login=:login AND user.password=:password"),
+
+        @NamedQuery(name = "User.findUserByLogin", query =
+                "SELECT user FROM User user WHERE user.login=:login"),
+
 })
 public class User {
 
     private int id;
+
     private String login;
+
     private String password;
+
     private String email;
+
     private String firstName;
+
     private String secondName;
+
     private List<Booking> bookings;
+
     private Role role;
+
     private Position position;
 
     public User() {
@@ -40,8 +53,8 @@ public class User {
         this.secondName = secondName;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -51,55 +64,15 @@ public class User {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "login", nullable = false, insertable = true, updatable = true, length = 16)
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    @JsonIgnore
-    @Basic
-    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 32)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
-    @Column(name = "email", nullable = true, insertable = true, updatable = true, length = 60)
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Basic
-    @Column(name = "first_name", nullable = true, insertable = true, updatable = true, length = 45)
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Basic
-    @Column(name = "second_name", nullable = true, insertable = true, updatable = true, length = 45)
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -119,18 +92,7 @@ public class User {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<Booking> getBookings() {
         return bookings;
     }
@@ -159,4 +121,63 @@ public class User {
         this.position = positionByPosition;
     }
 
+    public void setFields(User user) {
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+    }
+
+    @Basic
+    @Column(name = "login", nullable = false, insertable = true, updatable = true, length = 16)
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Basic
+    @JsonIgnore
+    @Column(name = "password", nullable = false, insertable = true, updatable = true, length = 32)
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "email", nullable = false, insertable = true, updatable = true, length = 60)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Basic
+    @Column(name = "first_name", nullable = false, insertable = true, updatable = true, length = 45)
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Basic
+    @Column(name = "second_name", nullable = false, insertable = true, updatable = true, length = 45)
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
 }

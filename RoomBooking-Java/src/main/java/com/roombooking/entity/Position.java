@@ -12,11 +12,18 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Position.findPositionByTitle", query =
+                "SELECT pos FROM Position pos WHERE pos.title=:title")
+})
 public class Position {
 
     private int id;
+
     private String title;
+
     private List<Rights> rights;
+
     private List<User> users;
 
     @Id
@@ -41,26 +48,26 @@ public class Position {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + title.hashCode();
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Position that = (Position) o;
+        Position position = (Position) o;
 
-        if (id != that.id) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (id != position.id) return false;
+        if (!title.equals(position.title)) return false;
 
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "position",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     public List<Rights> getRights() {
         return rights;
     }
@@ -69,8 +76,7 @@ public class Position {
         this.rights = rightsById;
     }
 
-    @OneToMany(mappedBy = "position",cascade= CascadeType.ALL)
-   // @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     public List<User> getUsers() {
         return users;
     }
@@ -79,4 +85,7 @@ public class Position {
         this.users = usersById;
     }
 
+    public void setFields(Position position) {
+        this.title = position.title;
+    }
 }

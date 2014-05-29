@@ -42,20 +42,20 @@
 
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>CORS</filter-name>
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+        <init-param>
+            <param-name>cors.supportedMethods</param-name>
+            <param-value>GET, HEAD, PUT, POST, DELETE, OPTIONS</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CORS</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-    <!--<filter>-->
-        <!--<filter-name>springOpenEntityManagerInViewFilter</filter-name>-->
-        <!--<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>entityManagerFactoryBeanName</param-name>-->
-            <!--<param-value>entityManagerFactory</param-value>-->
-        <!--</init-param>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>springOpenEntityManagerInViewFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
 </web-app>

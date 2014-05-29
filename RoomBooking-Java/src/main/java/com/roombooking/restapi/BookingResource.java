@@ -1,7 +1,10 @@
 package com.roombooking.restapi;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.roombooking.entity.Booking;
+import com.roombooking.entity.Room;
 import com.roombooking.entity.User;
+import com.roombooking.service.BookingFactory;
 import com.roombooking.service.BookingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +17,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
+import static com.roombooking.auth.Roles.ADMIN;
+import static com.roombooking.auth.Roles.USER;
+
+// todo maybe it makes sense to replace BookingService with BookingFactory
 @Component
 @Path("/booking")
 public class BookingResource {
@@ -27,8 +32,12 @@ public class BookingResource {
     @Autowired
     private BookingService bookingService;
 
+    @Autowired
+    private BookingFactory bookingFactory;
+
     @GET
-    @RolesAllowed({"Admin", "User"})
+    @JsonView({Room.class})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getAllBookingByCurrentUser(@Context HttpServletRequest servletRequest) {
         User user = (User) servletRequest.getAttribute("CurrentUser");
@@ -43,8 +52,9 @@ public class BookingResource {
     }
 
     @GET
+    @JsonView({Room.class})
     @Path("/available")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getAllAvailableBookingByCurrentUser(@Context HttpServletRequest servletRequest) {
         User user = (User) servletRequest.getAttribute("CurrentUser");
@@ -59,12 +69,13 @@ public class BookingResource {
     }
 
     @GET
+    @JsonView({User.class})
     @Path("/room-{id}/{date}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ADMIN, USER})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getTimetableByRoomAndDate(@PathParam("id") int id, @PathParam("date") String date) {
         logger.debug("Get Booking by room #{} on {}", id, date);
-        List<Booking> timetable = bookingService.getBookingByRoomIdAndDate(id, date);
+        List<Booking> timetable = bookingService.getBookingsByRoomIdAndDate(id, date);
         if (timetable.isEmpty()) {
             logger.debug("Booking by room #{} on {} not found", id, date);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -73,8 +84,28 @@ public class BookingResource {
         return timetable;
     }
 
+    @GET
+    @JsonView({Room.class})
+    @Path("/{dateFrom}/{dateTo}")
+    @RolesAllowed({ADMIN, USER})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Booking> getUserBookingsByDateRange(@PathParam("dateFrom") String dateFrom,
+                                                    @PathParam("dateTo") String dateTo,
+                                                    @Context HttpServletRequest servletRequest) {
+        User user = (User) servletRequest.getAttribute("CurrentUser");
+        logger.debug("Get Booking by dateFrom #{}; dateTo {}", dateFrom, dateTo);
+        List<Booking> timetable = bookingService.filterUserBookingsByDate(user.getId(), dateFrom, dateTo);
+        if (timetable.isEmpty()) {
+            logger.debug("Booking by by dateFrom #{}; dateTo {}", dateFrom, dateTo);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        logger.debug("Booking by dateFrom #{}; dateTo {} found", dateFrom, dateTo);
+        return timetable;
+    }
+
     @PUT
-    @RolesAllowed({"Admin", "User"})
+    @JsonView({Room.class})
+    @RolesAllowed({ADMIN, USER})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addNewBooking(Booking booking, @Context HttpServletRequest servletRequest) {
@@ -83,22 +114,18 @@ public class BookingResource {
         if (booking == null || booking.getDate() == null || booking.getRoom() == null || booking.getTimetable() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        String bookingDate = booking.getDate().toString();
-        String now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        if (bookingDate.compareTo(now) < 0) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-
         Booking createdBooking = bookingService.addBooking(user, booking.getDate(), booking.getRoom().getId(), booking.getTimetable().getId());
         return Response.ok().entity(createdBooking).build();
     }
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"Admin", "User"})
-    public Response deleteBooking(@PathParam("id") int id, @Context HttpServletRequest servletRequest) {
+    @RolesAllowed({ADMIN, USER})
+    public Response deleteUserBooking(@PathParam("id") int id, @Context HttpServletRequest servletRequest) {
         User user = (User) servletRequest.getAttribute("CurrentUser");
-        bookingService.deleteUserBooking(id, user);
+        BookingService bookingService = bookingFactory.createBookingService(user);
+        bookingService.deleteBooking(id, user);
         return Response.noContent().build();
     }
+
 }

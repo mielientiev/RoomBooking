@@ -5,4 +5,6 @@ import com.roombooking.entity.RoomType;
 
 public interface RoomTypeDao extends Dao<RoomType> {
 
+    RoomType findByRoomTypeName(String roomType);
+
 }

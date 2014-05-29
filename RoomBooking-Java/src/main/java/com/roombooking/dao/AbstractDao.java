@@ -12,6 +12,7 @@ import java.util.List;
 public class AbstractDao<T> implements Dao<T> {
 
     protected Class<T> entityClass;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -29,6 +30,12 @@ public class AbstractDao<T> implements Dao<T> {
 
         TypedQuery<T> typedQuery = entityManager.createQuery(criteriaQuery);
         return typedQuery.getResultList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public T findById(int id) {
+        return entityManager.find(this.entityClass, id);
     }
 
     @Override
@@ -53,13 +60,7 @@ public class AbstractDao<T> implements Dao<T> {
         entityManager.remove(entity);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public T findById(int id) {
-        return entityManager.find(this.entityClass, id);
-    }
-
-    public EntityManager getEntityManager() {
+    protected EntityManager getEntityManager() {
         return entityManager;
     }
 

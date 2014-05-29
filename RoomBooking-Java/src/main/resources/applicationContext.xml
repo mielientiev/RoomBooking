@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
     <context:component-scan base-package="com.roombooking"/>
+    <context:property-placeholder location="classpath:database.properties"/>
     <!--Beans-->
-    <bean id="userDao" class="com.roombooking.dao.user.UserJPADao" scope="prototype"/>
-    <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao" scope="prototype"/>
-    <bean id="timetableDao" class="com.roombooking.dao.timetable.TimetableJPADao" scope="prototype"/>
-    <bean id="bookingleDao" class="com.roombooking.dao.booking.BookingJPADao" scope="prototype"/>
-    <bean id="roomtypeleDao" class="com.roombooking.dao.roomtype.RoomTypeJPADao" scope="prototype"/>
+    <bean id="userDao" class="com.roombooking.dao.user.UserJPADao"/>
+    <bean id="roomDao" class="com.roombooking.dao.room.RoomJPADao"/>
+    <bean id="timetableDao" class="com.roombooking.dao.timetable.TimetableJPADao"/>
+    <bean id="bookingDao" class="com.roombooking.dao.booking.BookingJPADao"/>
+    <bean id="roomtypeDao" class="com.roombooking.dao.roomtype.RoomTypeJPADao"/>
+    <bean id="rightsDao" class="com.roombooking.dao.rights.RightsJPADao"/>
+    <bean id="roleDao" class="com.roombooking.dao.role.RoleJPADao"/>
+    <bean id="positionDao" class="com.roombooking.dao.position.PositionJPADao"/>
+
+    <bean id="bookingFactory" class="com.roombooking.service.BookingFactoryImpl"/>
 
     <bean id="roomService" class="com.roombooking.service.RoomService"/>
     <bean id="userService" class="com.roombooking.service.UserService"/>
     <bean id="timetableService" class="com.roombooking.service.TimetableService"/>
     <bean id="bookingService" class="com.roombooking.service.BookingService"/>
+    <bean id="adminBookingService" class="com.roombooking.service.AdminBookingService" parent="bookingService"/>
+    <bean id="roomTypeService" class="com.roombooking.service.RoomTypeService"/>
+    <bean id="positionService" class="com.roombooking.service.PositionService"/>
+    <bean id="roleService" class="com.roombooking.service.RoleService"/>
+    <bean id="rightsService" class="com.roombooking.service.RightsService"/>
 
     <!--Beans-->
 
     <!--JPA (Hibernate)-->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="username" value="root"/>
-        <property name="password" value="12345"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/RoomBooking"/>
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="user" value="${login}"/>
+        <property name="password" value="${password}"/>
+        <property name="jdbcUrl" value="${mysql-uri}"/>
+        <property name="driverClass" value="${mysql-driver}"/>
+
+        <property name="acquireIncrement" value="3"/>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="maxIdleTime" value="3600"/>
+        <property name="maxIdleTimeExcessConnections" value="300"/>
+        <property name="unreturnedConnectionTimeout" value="3600"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -39,13 +57,15 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.format_sql">false</prop>
                 <prop key="use_sql_comments">false</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+
             </props>
         </property>
     </bean>

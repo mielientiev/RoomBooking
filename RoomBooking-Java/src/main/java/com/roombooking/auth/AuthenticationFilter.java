@@ -52,7 +52,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         if (decodedAuth.isEmpty())
             return null;
 
-        int pos = decodedAuth.indexOf(":");  //todo validate [:] char
+        int pos = decodedAuth.indexOf(":");
         String login = decodedAuth.substring(0, pos);
         String password = decodedAuth.substring(pos + 1);
         return dao.findByLoginPassword(login, password);

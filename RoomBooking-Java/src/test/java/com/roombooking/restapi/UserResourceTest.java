@@ -2,39 +2,13 @@ package com.roombooking.restapi;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.spi.spring.container.servlet.SpringServlet;
-import com.sun.jersey.test.framework.AppDescriptor;
-import com.sun.jersey.test.framework.JerseyTest;
-import com.sun.jersey.test.framework.WebAppDescriptor;
-import com.sun.jersey.test.framework.spi.container.TestContainerFactory;
-import com.sun.jersey.test.framework.spi.container.grizzly.web.GrizzlyWebTestContainerFactory;
 import org.junit.Test;
-import org.springframework.web.context.ContextLoaderListener;
-import  org.springframework.web.context.request.RequestContextListener;
 
 import javax.ws.rs.core.MediaType;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserResourceTest extends JerseyTest {
-
-    @Override
-    protected AppDescriptor configure() {
-        return new WebAppDescriptor.Builder("com.roombooking.restapi")
-                .contextParam("contextConfigLocation", "classpath:applicationContext.xml")
-                .contextListenerClass(ContextLoaderListener.class)
-                .requestListenerClass(RequestContextListener.class)
-                .initParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
-                .initParam("com.sun.jersey.spi.container.ContainerRequestFilters", "com.roombooking.filter.AuthenticationFilter")
-                .initParam("com.sun.jersey.spi.container.ResourceFilters", "com.sun.jersey.api.container.filter.RolesAllowedResourceFilterFactory")
-                .servletClass(SpringServlet.class)
-                .build();
-    }
-
-    @Override
-    public TestContainerFactory getTestContainerFactory() {
-        return new GrizzlyWebTestContainerFactory();
-    }
+public class UserResourceTest extends JerseyConfiguration {
 
     @Test
     public void testUserWithAdminRole() throws Exception {
@@ -43,8 +17,6 @@ public class UserResourceTest extends JerseyTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Basic bWVsaToxMjM0NQ")
                 .get(ClientResponse.class);
-        String jsonStr = response.getEntity(String.class);
-        System.out.println(jsonStr);
         assertEquals(200, response.getStatus());
     }
 
@@ -64,7 +36,6 @@ public class UserResourceTest extends JerseyTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Basic dmFoYToxMjM0NTY")
                 .get(ClientResponse.class);
-        String jsonStr = response.getEntity(String.class);
         assertEquals(200, response.getStatus());
     }
 
@@ -77,6 +48,5 @@ public class UserResourceTest extends JerseyTest {
                 .get(ClientResponse.class);
         assertEquals(404, response.getStatus());
     }
-
 
 }

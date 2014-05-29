@@ -9,13 +9,22 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * Role {Admin, User}
+ */
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonInclude(Include.NON_EMPTY)
+@NamedQueries({
+        @NamedQuery(name = "Role.findRoleByTitle", query =
+                "SELECT role FROM Role role WHERE role.title=:title")
+})
 public class Role {
 
     private int id;
+
     private String title;
+
     private List<User> users;
 
     @Id
@@ -40,6 +49,13 @@ public class Role {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -52,14 +68,7 @@ public class Role {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     public List<User> getUsers() {
         return users;
     }
@@ -68,4 +77,7 @@ public class Role {
         this.users = usersById;
     }
 
+    public void setFields(Role role) {
+        this.title = role.title;
+    }
 }
