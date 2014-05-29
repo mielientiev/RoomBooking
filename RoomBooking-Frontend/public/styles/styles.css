@@ -1,0 +1,361 @@
+#navbar-main {
+  height: 30px;
+  padding-right: 100px;
+  padding-left: 100px;
+}
+
+.navbar-links {
+  margin-left: 120px;
+}
+
+#content {
+  
+  margin-top: 60px;
+	width: 95%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+h1,
+h2 .h2 {
+	margin-top: 5px;
+	padding-left: 10%;
+}
+
+.h2 {
+  margin-top: 5px;
+  padding-left: 10%;
+}
+
+.bookinglist {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  width: 280px;
+}
+
+.roomlist {
+	padding-left: 10px;
+  padding-right: 10px;
+	padding-bottom: 10px;
+	background-color: #ffffff;
+  border: 1px solid #dddddd;
+  width: 280px;
+  border-radius: .3em;
+}
+
+.roomlist:hover {
+  border-color: #0088cc;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+     -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+          box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.roomlist-item {
+	color: #555555;
+	width: 20%;
+}
+
+.roomlist-item:hover {
+	color: #555555;
+	text-decoration: none;
+}
+
+.room-card-table td {
+  width: 50%;
+}
+
+.booking-card-table {
+  width: 100%;
+}
+
+#loading-div {
+  padding-left: 50%;
+  padding-top: 15%;
+}
+
+.disabled{
+  display: none;
+}
+
+.room-details-table {
+  white-space:nowrap;
+  width: 70%;
+  margin: 20px;
+  font-size: 20px;
+}
+
+.room-details-table td {
+  white-space:nowrap;
+  padding-bottom: 10px;
+  border: 1px solid #dddddd;
+}
+
+.datepicker-table {
+  padding: 0 0 0 0;
+  width: 100px;
+}
+
+.myform {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.has-prop {
+  color: #2f8912;
+}
+
+.has-no-prop {
+  color: #d60030;
+}
+
+.btn-pair {
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+  padding: 5.5px;
+  vertical-align: center;
+}
+
+.btn-group-pair {
+  margin-top: 6px;
+  margin-left: 20px;
+  height: 100%;
+  width: 100%;
+  width: 300px;
+  border-radius: 2px;
+}
+
+.submit-booking {
+  text-align: center;
+  padding: 20px;
+}
+
+#submit-booking-btn {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+#booking-div {
+  margin-bottom: 30px;
+}
+
+#list-container {
+  margin-left: 220px;
+}
+
+.alert-fail-filter {
+  position: absolute;
+  background: #222222;
+  width: 40%;
+  margin-left: 32%;
+  margin-top: 12%;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.login-div {
+  padding: 20px 20px 20px 20px;
+  margin-top: 5%;
+  width: 100%;
+  margin-left: 10%;
+}
+
+#login-row {
+  height: 300px;
+}
+
+#login-table {  width: 80%;
+}
+
+#login-col {
+  padding-left: 2%;
+}
+
+#description-col {
+  padding-right: 2%;
+  width: 50%;
+  border-right: 1px solid #cccccc;
+}
+
+.btn-login {
+  float: right;
+}
+
+.login-input {
+  margin-left: 5%;
+  width: 95%;
+}
+
+.login-fail {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.btn-booking-room {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 30px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.btn-delete-booking {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+#datepicker-div {
+  color: #222222;
+}
+
+div.small-datepicker{
+  margin-top: 5px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+.fixed-left {
+  color: #ffffff;
+  position: fixed;
+  height: 75%;
+  width: 230px;
+  margin-left: 0px;
+  padding-left: 8px;
+  background-color: #222222;
+  overflow-y: scroll;
+}
+
+.fixed-left-low {
+  border-top: 2px solid #ffffff;
+  color: #ffffff;
+  position: fixed;
+  height: 10%;
+  width: 230px;
+  bottom: 5%;
+  margin-left: 0px;
+  padding-left: 8px;
+  background-color: #222222;
+}
+::-webkit-scrollbar {
+      width: 12px;
+}
+::-webkit-scrollbar-track {
+      background-color: #111111;
+} /* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-thumb {
+      background-color: #444444;
+      border-radius: 12px;
+}
+::-webkit-scrollbar-thumb:hover {
+      background-color: #666666;
+} /* this will style the thumb, ignoring the track */
+
+.non-bold {
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.filter-input {
+  height: 30px;
+  width: 80%;
+  margin-left: 15px;
+  margin-bottom: 7px;
+  margin-top: 3px;
+  padding-left: 2px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.filter-checkbox-div {
+  margin-top: 12px;
+}
+
+.filter-checkbox {
+  margin-left: 12px;
+}
+
+.date-checkbox-div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#filter-header {
+  margin-top: 20px;
+}
+
+.pair-select {
+  height: 30px;
+  color: #000000;
+  width: 80%;
+  margin-left: 15px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+};
+
+.btn-search-div {
+  text-align: center;
+}
+
+#search {
+  top: 0; left: 0; bottom: 0; right: 0;
+  margin-top: 10px;
+  margin-left: 30px;
+  padding-top: 2px;
+  width: 70%;
+  height: 30px;
+}
+
+.disabled-select {
+  color: #888888;
+}
+
+div.hr {
+background: #ffffff  no-repeat scroll center;
+margin-left: 0px;
+margin-top: 15px;
+margin-right: 0px;
+width:90%;
+height: 1px;
+}
+
+div.hr hr {
+display: none;
+}
+
+.alert-success-operation {
+    position: fixed;
+  background: #3fb618;
+  width: 40%;
+  margin-left: 32%;
+  margin-top: 12%;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.alert-fail-operation {
+    position: fixed;
+  background: #222222;
+  width: 40%;
+  margin-left: 32%;
+  margin-top: 12%;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}

@@ -1,0 +1,76 @@
+<script data-main='js/boot' type="text/javascript" src='/public/js/libs/jquery-ui.js'></script>
+
+<form class="form-horizontal myform">
+<div id="success-alerts"></div>
+    <legend><a href="#rooms" id="btn-back" class="btn btn-default btn-xs">&#60; Back</a><h1><%= roomName %></h1></legend>
+
+    <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+  <li class="active"><a href="#info" data-toggle="tab">General info</a></li>
+  <li><a href="#booking" data-toggle="tab">Booking</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade active in" id="info">
+  <h2>General Information</h2>
+    <table class="room-details-table">
+    <tr>
+        <td><label class="col-lg-2 control-label">Floor:</label></td>
+        <td><label class="col-lg-2 control-label"><%= floor %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Capacity:</label></td>
+        <td><label class="col-lg-2 control-label"><%= places %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Computers:</label></td>
+        <td><label class="col-lg-2 control-label"><%= computers != 0 ? computers :
+        "<span class='has-no-prop'> &#x2717;"%></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Projector:</label></td>
+        <td><label class="col-lg-2 control-label"><%= projector == true?
+        "<span class='has-prop'>&#10003;</span>" : "<span class='has-no-prop'>&#x2717;</span>" %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Board:</label></td>
+        <td><label class="col-lg-2 control-label"><%= board == true?
+        "<span class='has-prop'>&#10003;" : "<span class='has-no-prop'>&#x2717;</span>" %></label></td>
+    </tr>
+    <tr>
+        <td><label class="col-lg-2 control-label">Type:</label></td>
+        <td><label class="col-lg-2 control-label"><%= roomType["roomType"] %></label></td>
+    </tr>
+    </table>
+    
+  </div>
+  <div class="tab-pane fade" id="booking">
+
+  <h2 id="booking-div">Booking</h2>
+    <table class="datepicker-table">
+    <tr>
+        <td><div id="datepicker"></div></td>
+        <td>
+            <div id="loading-div">
+              <img src="/public/styles/images/loading.GIF" />
+            </div>
+              <div id="pairs" class="btn-group-vertical btn-group-pair disabled">
+            </div>
+        </td>
+    </tr>
+    </table>
+  <div class="form-group submit-booking">
+      <div id="submit-booking-btn-div" class="col-lg-10 col-lg-offset-2">
+        <button class="btn" id="submit-booking-btn" disabled>Book</button>
+      </div>
+      <div id="access-denial-div" class="alert alert-dismissable alert-danger disabled">    
+       You have no rights to book this room
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    
+
+    
+
+</form>
