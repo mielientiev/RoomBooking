@@ -7,6 +7,7 @@ import com.roombooking.entity.Booking;
 import com.roombooking.entity.Room;
 import com.roombooking.entity.Timetable;
 import com.roombooking.entity.User;
+import com.roombooking.listener.BookingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,8 @@ public class BookingService {
         booking.setTimetable(timetable);
         booking.setUser(user);
         bookingDao.save(booking);
+
+        BookingManager.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "booked");
         return booking;
     }
 
@@ -121,6 +124,7 @@ public class BookingService {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
 
+        BookingManager.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "canceled");
         bookingDao.deleteById(bookingId);
     }
 
@@ -129,7 +133,7 @@ public class BookingService {
         try {
             fromDate = Date.valueOf(dateFrom);
             toDate = Date.valueOf(dateTo);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 

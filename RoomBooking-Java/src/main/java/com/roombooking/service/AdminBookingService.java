@@ -2,6 +2,7 @@ package com.roombooking.service;
 
 import com.roombooking.entity.Booking;
 import com.roombooking.entity.User;
+import com.roombooking.listener.BookingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +15,12 @@ public class AdminBookingService extends BookingService {
 
     @Override
     public void deleteBooking(int id, User user) {
-        Booking deletedBooking = bookingDao.findById(id);
-        if (deletedBooking == null) {
+        Booking booking = bookingDao.findById(id);
+        if (booking == null) {
             logger.debug("Booking with bookingId#{} doesn't exist", id);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+        BookingManager.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "canceled");
         bookingDao.deleteById(id);
     }
 }
