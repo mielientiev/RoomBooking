@@ -49,14 +49,6 @@ define([
             return yyyy+'-'+mm+'-'+dd;
         },
 
-        filter : function(criteria) {
-            var self = this;
-            var col = this.model;
-            var newCol = col.filter(function(room, criteria) {
-                return room.filterByCriteria(room, criteria);
-            });
-        },
-
         filterByCriteria : function(room, criteria) {
             var isFiltered = true;
             isFiltered = isFiltered & (criteria.roomName == "" || room.get("roomName").indexOf(criteria.roomName) != -1);
@@ -64,7 +56,7 @@ define([
                 room.get("roomType").id == criteria.roomType);
             isFiltered = isFiltered & (room.get("places") >= criteria.places);
             isFiltered = isFiltered & (room.get("computers") >= criteria.computers);
-            isFiltered = isFiltered & (!criteria.isFilteredoard || room.get("board") == criteria.board);
+            isFiltered = isFiltered & (!criteria.board || room.get("board") == criteria.board);
             isFiltered = isFiltered & (!criteria.projector || room.get("projector") == criteria.projector);
             isFiltered = isFiltered & (parseInt(criteria.all) || room.get("roomType").rights[0].canBookRoom);
             return isFiltered;
@@ -74,15 +66,12 @@ define([
             var self = this;
             if(event.which == 13) {
                 self.filterRooms();
-                return;
             }
             else if((event.which < 48 || event.which > 57) && event.which != 8 && event.which != 46) {
                 event.preventDefault();
-                return;
             }
             else if (event.target.value.length > 3 && event.which != 8 && event.which != 46) {
                 event.preventDefault();
-                return;
             }
         },
 
@@ -90,7 +79,6 @@ define([
             var self = this;
             if(event.which == 13) {
                 self.filterRooms();
-                return;
             }
         },
 
@@ -115,9 +103,8 @@ define([
         },
 
         initializeFilters : function(roomTypes) {
-            var self = this;
 
-            for(i = 0; i < roomTypes.length; i++) {
+            for(var i = 0; i < roomTypes.length; i++) {
                 var option = '<option value="' +
                 roomTypes[i].id +
                 '">' +
@@ -211,7 +198,7 @@ define([
             self.$('#list-container').html('<ul class="thumbnails"></ul>');
             for (var i = startPos; i < endPos; i++) {
                 self.$('.thumbnails').append(new RoomListItemView({model: self.model.models[i]}).render().el);
-            };
+            }
             self.$("#loading-div").addClass("disabled");
 
             $(this.el).append(new Paginator({model: self.model, page: self.page, parent: this}).render().el);

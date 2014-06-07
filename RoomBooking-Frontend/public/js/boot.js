@@ -1,10 +1,10 @@
 require.config({
   paths: {
-    jQuery: '/libs/jquery',
-    Underscore: '/libs/underscore',
-    Backbone: '/libs/backbone',
-    datepicker: '/libs/jquery-ui',
-    text: '/libs/text',
+    jQuery: 'libs/jquery',
+    Underscore: 'libs/underscore',
+    Backbone: 'libs/backbone',
+    datepicker: 'libs/jquery-ui',
+    text: 'libs/text',
     templates: '../templates'
   },
 

@@ -1,6 +1,5 @@
 define(['text!templates/NavbarTemplate.html',
-		'text!templates/NavbarUnregTemplate.html',
-		'text!templates/NavbarAdminTemplate.html'
+		'text!templates/NavbarUnregTemplate.html'
 		],
 	function(
 		NavbarTemplate,

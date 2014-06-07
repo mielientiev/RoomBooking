@@ -36,7 +36,7 @@ define([
 	                beforeSend: function(xhr) {
 	                	xhr.setRequestHeader('Authorization', headerValue)
 	                },
-	                success: function(data) {
+	                success: function() {
 	                    self.login(headerValue);
 	                },
 	                error: function() {
@@ -46,8 +46,6 @@ define([
 		},
 
 		render: function() {
-
-			var self = this;
 
 			this.nv = new NavbarView();
 			this.nv.render();

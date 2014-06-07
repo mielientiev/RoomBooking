@@ -54,7 +54,7 @@ define(['text!templates/BookingListTemplate.html',
         initBookingBtnHandlers: function() {
             var self = this;
             $(function() {
-                for(i = 0; i < self.model.models.length; i++) {
+                for(var i = 0; i < self.model.models.length; i++) {
                     self.$("#" + self.model.models[i].attributes.id).click(function(e){
                         self.deleteBooking(e.target.id);
                     });
@@ -78,7 +78,7 @@ define(['text!templates/BookingListTemplate.html',
             for (var i = startPos; i < endPos; i++) {
                 var bookingView = new BookingListItemView( { model: self.model.models[i] } ).render().el;
                 $('.thumbnails', this.el).append(bookingView);
-            };
+            }
 
             var paginator = new Paginator( { model: self.model, page: self.page, parent: this } ).render().el;
             $(this.el).append(paginator);
@@ -172,7 +172,7 @@ define(['text!templates/BookingListTemplate.html',
             var self = this;
             (self.$("#from")).datepicker({
                 dateFormat: "yy-mm-dd",
-                onSelect: function(selected, e) {                
+                onSelect: function(selected) {
                     self.dateFrom = selected;             
                     (self.$("#to")).datepicker("option", "minDate", selected);
                 }
@@ -183,7 +183,7 @@ define(['text!templates/BookingListTemplate.html',
                 minDate: 0,
                 maxDate: Infinity,
                 dateFormat: "yy-mm-dd",
-                onSelect: function(selected, e) {                
+                onSelect: function(selected) {
                     self.dateTo = selected;             
                 }
             });            

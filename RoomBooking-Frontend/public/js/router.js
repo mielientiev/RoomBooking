@@ -45,7 +45,7 @@ define(
                 }
                 else {
                     $.ajax({
-                        url: "http://roombooking-ejournal.rhcloud.com/api/user-service/user",
+                        url: "/api/user-service/user",
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader('Authorization', header)
                         },
