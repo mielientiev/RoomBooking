@@ -9,9 +9,10 @@ define([], function() {
         },
 
         render:function () {
-            $(this.el).empty();
-            $(this.el).attr('id', 'pagination-div');
             var that = this;
+            
+            $(this.el).empty();
+            $(this.el).attr('id', 'pagination-div');            
 
             var items = this.model.models;
             var len = items.length;

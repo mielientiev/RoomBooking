@@ -1,61 +1,65 @@
 define([
 	'text!templates/loginTemplate.html',
 	'text!templates/LoginFailTemplate.html',
-	'views/NavbarView',
+	'views/NavbarView'
 	],
 	function(
 		loginTemplate,
 		LoginFailTemplate,
 		NavbarView
-		){
+		)
+	{
 
-var loginView = Backbone.View.extend({
-	el : $('#content'),
+	var loginView = Backbone.View.extend({
 
-	initialize : function() {
-	},
+		el : $('#content'),
 
-	login : function(headerValue) {
-		$.cookie('user', headerValue);
-		this.nv = new NavbarView();
-		this.nv.render();
-		document.location = "?#rooms";
-	},
+		events: {
+			'click #btn-login' : 'authenticate'
+		},
 
-	authenticate: function() {
-		var that = this;
-		var login 		= $("#input-login").val();
-		var password 	= $("#input-password").val();
-		var headerValue = "Basic " + B64.encode(login + ':' + password);
-		$.ajax({
-                url: "/api/user-service/user",
-                beforeSend: function(xhr){xhr.setRequestHeader('Authorization', headerValue)},
-                success: function(data) {
-                	$.cookie('user', headerValue);
-                    that.login(headerValue);
-                },
-                error: function() {
-                	$("#alert-container").html(LoginFailTemplate);
-                }
-            });
-	},
 
-	render: function() {
-		this.nv = new NavbarView();
-		this.nv.render();
+		login : function(headerValue) {
+			$.cookie('user', headerValue, { expires : 7 });
+			this.nv = new NavbarView();
+			this.nv.render();
+			document.location = "?#rooms";
+		},
 
-		var that = this;
-		$(this.el).html(loginTemplate);
+		authenticate: function() {
+			var self = this;
+			var login 		= self.$("#input-login").val();
+			var password 	= self.$("#input-password").val();
+			var headerValue = "Basic " + B64.encode(login + ':' + password);
+			$.ajax({
+	                url: "/api/user-service/user",
+	                beforeSend: function(xhr) {
+	                	xhr.setRequestHeader('Authorization', headerValue)
+	                },
+	                success: function(data) {
+	                    self.login(headerValue);
+	                },
+	                error: function() {
+	                	self.$("#alert-container").html(LoginFailTemplate);
+	                }
+	            });
+		},
 
-		$("#btn-login").click(function(){
-			that.authenticate();
-		});
+		render: function() {
 
-		return this;
-	}
+			var self = this;
 
-  });
+			this.nv = new NavbarView();
+			this.nv.render();
+			
+			$(this.el).html(loginTemplate);
 
-  return loginView;
+
+			return this;
+		}
+
+	});
+
+	return loginView;
 
 });

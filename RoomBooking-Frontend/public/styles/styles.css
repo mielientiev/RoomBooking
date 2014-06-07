@@ -11,7 +11,7 @@
 #content {
   
   margin-top: 60px;
-	width: 95%;
+	width: z;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -358,4 +358,25 @@ display: none;
   text-align: center;
   padding-top: 25px;
   padding-bottom: 25px;
+}
+
+.roomType1 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+  background: #CCFFCC;
+}
+
+.roomType2 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+  background: #FFFFCC;
+}
+
+.roomType3 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+  background: #CCCCFF;
 }

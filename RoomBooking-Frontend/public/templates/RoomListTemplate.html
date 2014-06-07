@@ -5,23 +5,23 @@
 
   <div class="fixed-left">
   <h3 id="filter-header">Filters:</h3>
-    <s`n class="filter-name">
+    <span class="filter-name">
       Room name:
     </span>
     <form>
-      <input class="form-control filter-input" type="text" id="roomName" placeholder="Name">
+      <input class="form-control filter-input" type="text" maxlength="6" id="roomName" placeholder="Name">
     </form>
     <span class="filter-name">
       Capacity:
     </span>
     <form>
-      <input class="form-control filter-input" type="number" id="places" placeholder="Capacity">
+      <input class="form-control filter-input" type="number" min="0" max="999" maxlength="3" id="places" placeholder="Capacity">
     </form>
     <span class="filter-name">
       Computers:
     </span>
     <form>
-      <input class="form-control filter-input" type="number" id="computers" placeholder="Computers">
+      <input class="form-control filter-input" type="number" min="0" max="999" maxlength="3" id="computers" placeholder="Computers">
     </form>
     <span class="filter-name">
       Room type:
@@ -85,7 +85,7 @@
 </div>
 
 <div id="loading-div">
-<img src="/public/styles/images/loading.GIF" />
+<img src="../styles/images/loading.gif" />
 </div>
 <div id="list-container">
 	<ul class="thumbnails"></ul>
