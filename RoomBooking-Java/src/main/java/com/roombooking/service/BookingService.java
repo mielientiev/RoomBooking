@@ -7,7 +7,7 @@ import com.roombooking.entity.Booking;
 import com.roombooking.entity.Room;
 import com.roombooking.entity.Timetable;
 import com.roombooking.entity.User;
-import com.roombooking.listener.BookingManager;
+import com.roombooking.listener.BookingEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,9 @@ import java.util.List;
 public class BookingService {
 
     private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
+
+    @Autowired
+    protected BookingEvent bookingEvent;
 
     @Autowired
     protected BookingDao bookingDao;
@@ -83,7 +86,7 @@ public class BookingService {
         booking.setUser(user);
         bookingDao.save(booking);
 
-        BookingManager.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "booked");
+        bookingEvent.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "booked");
         return booking;
     }
 
@@ -124,7 +127,7 @@ public class BookingService {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
 
-        BookingManager.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "canceled");
+        bookingEvent.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "canceled");
         bookingDao.deleteById(bookingId);
     }
 

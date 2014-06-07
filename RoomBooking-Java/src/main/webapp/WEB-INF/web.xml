@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
@@ -57,6 +57,15 @@
         <url-pattern>/api/booking/polling/*</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>AuthFilterForPolling</filter-name>
+        <filter-class>com.roombooking.auth.AuthenticationPollingFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilterForPolling</filter-name>
+        <url-pattern>/api/booking/polling/*</url-pattern>
+    </filter-mapping>
 
     <filter>
         <filter-name>CORS</filter-name>

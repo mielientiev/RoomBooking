@@ -22,6 +22,9 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
                 "SELECT timetable FROM Timetable timetable, Booking b " +
                         "WHERE b.timetable.id = timetable.id AND b.date =:date AND b.room.id=:roomId"),
 
+        @NamedQuery(name = "Timetable.findAll", query =
+                "SELECT timetable FROM Timetable timetable ORDER BY timetable.start"),
+
         @NamedQuery(name = "Timetable.findTimetableByTime", query =
                 "SELECT timetable FROM Timetable timetable " +
                         "WHERE (:start BETWEEN timetable.start AND timetable.end) " +

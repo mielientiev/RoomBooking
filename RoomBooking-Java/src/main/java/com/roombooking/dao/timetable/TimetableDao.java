@@ -13,4 +13,6 @@ public interface TimetableDao extends Dao<Timetable> {
 
     List<Timetable> findByTime(Time start, Time end);
 
+    List<Timetable> findAllOrderByTime();
+
 }

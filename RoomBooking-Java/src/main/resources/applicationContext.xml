@@ -21,6 +21,8 @@
     <bean id="positionDao" class="com.roombooking.dao.position.PositionJPADao"/>
 
     <bean id="bookingFactory" class="com.roombooking.service.BookingFactoryImpl"/>
+    <bean id="authorizationUtil" class="com.roombooking.utils.AuthorizationUtil"/>
+    <bean id="bookingEvent" class="com.roombooking.listener.BookingEvent"/>
 
     <bean id="roomService" class="com.roombooking.service.RoomService"/>
     <bean id="userService" class="com.roombooking.service.UserService"/>
@@ -43,7 +45,7 @@
 
         <property name="acquireIncrement" value="3"/>
         <property name="minPoolSize" value="5"/>
-        <property name="maxPoolSize" value="50"/>
+        <property name="maxPoolSize" value="140"/>
         <property name="maxIdleTime" value="3600"/>
         <property name="maxIdleTimeExcessConnections" value="300"/>
         <property name="unreturnedConnectionTimeout" value="3600"/>

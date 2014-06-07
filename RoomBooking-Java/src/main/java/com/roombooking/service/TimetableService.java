@@ -20,7 +20,7 @@ public class TimetableService {
     }
 
     public List<Timetable> getTimetable() {
-        return timetableDao.findAll();
+        return timetableDao.findAllOrderByTime();
     }
 
     public List<Timetable> getTimetableByRoomIdAndDate(int id, String date) {

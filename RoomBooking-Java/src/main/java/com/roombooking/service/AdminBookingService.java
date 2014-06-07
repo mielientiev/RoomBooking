@@ -2,7 +2,6 @@ package com.roombooking.service;
 
 import com.roombooking.entity.Booking;
 import com.roombooking.entity.User;
-import com.roombooking.listener.BookingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +19,8 @@ public class AdminBookingService extends BookingService {
             logger.debug("Booking with bookingId#{} doesn't exist", id);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        BookingManager.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "canceled");
+        bookingEvent.notify(booking.getRoom().getId(), booking.getDate(), booking.getTimetable().getId(), "canceled");
         bookingDao.deleteById(id);
     }
+
 }

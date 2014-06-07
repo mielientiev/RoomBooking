@@ -33,4 +33,10 @@ public class TimetableJPADao extends AbstractDao<Timetable> implements Timetable
         query.setParameter("end", end);
         return query.getResultList();
     }
+
+    @Override
+    public List<Timetable> findAllOrderByTime() {
+        TypedQuery<Timetable> query = getEntityManager().createNamedQuery("Timetable.findAll", entityClass);
+        return query.getResultList();
+    }
 }
