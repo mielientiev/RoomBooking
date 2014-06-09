@@ -47,7 +47,6 @@
         <property name="minPoolSize" value="5"/>
         <property name="maxPoolSize" value="140"/>
         <property name="maxIdleTime" value="3600"/>
-        <property name="maxIdleTimeExcessConnections" value="300"/>
         <property name="unreturnedConnectionTimeout" value="3600"/>
     </bean>
 
