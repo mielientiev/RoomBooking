@@ -13,16 +13,5 @@
         <class>com.roombooking.entity.Timetable</class>
         <class>com.roombooking.entity.User</class>
         <class>com.roombooking.entity.Role</class>
-
-        <!--<properties>-->
-        <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
-        <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
-        <!--<property name="hibernate.show_sql" value="false"/>-->
-        <!--<property name="hibernate.format_sql" value="false"/>-->
-        <!--<property name="use_sql_comments" value="false"/>-->
-        <!--<property name="hibernate.cache.use_second_level_cache" value="true"/>-->
-        <!--<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>-->
-        <!--</properties>-->
-
     </persistence-unit>
 </persistence>

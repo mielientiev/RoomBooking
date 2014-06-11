@@ -37,17 +37,18 @@
     <!--Beans-->
 
     <!--JPA (Hibernate)-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
         <property name="user" value="${login}"/>
         <property name="password" value="${password}"/>
         <property name="jdbcUrl" value="${mysql-uri}"/>
         <property name="driverClass" value="${mysql-driver}"/>
 
-        <property name="acquireIncrement" value="3"/>
-        <property name="minPoolSize" value="5"/>
-        <property name="maxPoolSize" value="140"/>
-        <property name="maxIdleTime" value="3600"/>
-        <property name="unreturnedConnectionTimeout" value="3600"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="partitionCount" value="3"/>
+        <property name="maxConnectionsPerPartition" value="40"/>
+        <property name="minConnectionsPerPartition" value="10"/>
+        <property name="statementsCacheSize" value="100"/>
+
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

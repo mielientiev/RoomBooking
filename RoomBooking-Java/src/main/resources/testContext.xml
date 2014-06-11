@@ -38,18 +38,19 @@
 
 
     <!-- Data Source -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="user" value="sa"/>
-        <property name="password" value=""/>
-        <property name="jdbcUrl" value="jdbc:hsqldb:mem:myTestDB;shutdown=true"/>
-        <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
+    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="user" value="${login}"/>
+        <property name="password" value="${password}"/>
+        <property name="jdbcUrl" value="${mysql-uri}"/>
+        <property name="driverClass" value="${mysql-driver}"/>
 
-        <property name="acquireIncrement" value="3" />
-        <property name="minPoolSize" value="5" />
-        <property name="maxPoolSize" value="20" />
-        <property name="maxIdleTime" value="3000" />
+        <property name="acquireIncrement" value="5"/>
+        <property name="partitionCount" value="3"/>
+        <property name="maxConnectionsPerPartition" value="40"/>
+        <property name="minConnectionsPerPartition" value="10"/>
+        <property name="statementsCacheSize" value="100"/>
+
     </bean>
-
     <jdbc:embedded-database id="myTestDB" type="HSQL">
         <jdbc:script location="classpath:data.sql"/>
     </jdbc:embedded-database>
